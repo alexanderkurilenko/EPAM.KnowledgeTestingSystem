@@ -12,11 +12,13 @@ namespace WebUI.Util
     public class NinjectDependencyResolver : IDependencyResolver
     {
         private IKernel kernel;
+
         public NinjectDependencyResolver(IKernel kernelParam)
         {
             kernel = kernelParam;
             AddBindings();
         }
+
         public object GetService(Type serviceType)
         {
             return kernel.TryGet(serviceType);
@@ -29,6 +31,7 @@ namespace WebUI.Util
         private void AddBindings()
         {
             kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IRoleService>().To<RoleService>();
         }
     }
 }

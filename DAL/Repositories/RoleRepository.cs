@@ -52,6 +52,11 @@ namespace DAL.Repositories
             return db.Set<Role>().ToList();
         }
 
+        public Role GetRoleByName(string name)
+        {
+            return db.Set<Role>().FirstOrDefault(role => role.Type.ToLower() == name.ToLower());
+        }
+
         public void Update(Role item)
         {
             db.Entry(item).State = EntityState.Modified;
