@@ -87,7 +87,7 @@ namespace WebUI.Controllers
             if (ModelState.IsValid)
             {
                 CustomMembershipProvider provider = new CustomMembershipProvider(_userService, _roleService);
-                bool membershipUserCreated = provider.CreateUser(viewModel.Login, viewModel.Email, viewModel.Password);
+                bool membershipUserCreated = provider.CreateUser(viewModel.Login, viewModel.Email, viewModel.Password,viewModel.Age);
 
                 if (membershipUserCreated == true)
                 {

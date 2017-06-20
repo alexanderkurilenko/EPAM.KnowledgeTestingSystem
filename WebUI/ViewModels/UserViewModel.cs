@@ -43,7 +43,7 @@ namespace WebUI.ViewModels
         [Display(Name = "Confirm new password")]
         [StringLength(40, ErrorMessage = "The password must contain at least {2} characters", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Passwords must match")]
+        [Compare("Password", ErrorMessage = "Passwords must match")]
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Make moderator")]
@@ -54,9 +54,6 @@ namespace WebUI.ViewModels
 
         [Display(Name = "Roles")]
         public IList<RoleDTO> Roles { get; set; }
-
-        [Display(Name = "Profile")]
-        public ProfileDTO UserProfile { get; set; }
 
     }
 }

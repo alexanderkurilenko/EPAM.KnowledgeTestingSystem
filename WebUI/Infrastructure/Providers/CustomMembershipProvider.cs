@@ -36,20 +36,17 @@ namespace WebUI.Infrastructure.Providers
             return false;
         }
 
-        public bool CreateUser(string login, string email, string password)
+        public bool CreateUser(string login, string email, string password,int age)
         {
 
             UserDTO userDTO = new UserDTO
             {
-                Login = login,
+                Name = login,
                 Email = email,
                 Password = Crypto.HashPassword(password),
-                UserProfile = new ProfileDTO()
-                {
-                    FirstName="",
-                    SurName="",
-                    Tests=null
-                }
+                Age = age,
+                TestResults = new List<TestResultDTO>()
+
             };
 
             // RoleDTO adminRole = _roleService.GetRole(1);

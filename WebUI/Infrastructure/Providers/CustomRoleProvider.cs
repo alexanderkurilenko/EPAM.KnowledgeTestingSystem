@@ -42,7 +42,7 @@ namespace WebUI.Infrastructure.Providers
 
             foreach (var role in user.Roles)
             {
-                roles.Add(role.Type);
+                roles.Add(role.Name);
             }
             return roles.ToArray();
         }

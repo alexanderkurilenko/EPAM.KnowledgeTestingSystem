@@ -9,7 +9,6 @@ namespace DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IProfileRepository Profiles { get; }
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }
         IResultRepository Results { get; }

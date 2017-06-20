@@ -65,7 +65,7 @@ namespace DAL.Repositories
 
         public User GetByLogin(string login)
         {
-           return  db.Set<User>().FirstOrDefault(user => user.Login == login);
+           return  db.Set<User>().FirstOrDefault(user => user.Name == login);
         }
 
         public void Update(User item)

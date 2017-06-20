@@ -53,30 +53,9 @@ namespace BLL.Services.Implementation
         public TestResultDTO CheckAnswers(TestDTO test)
         {
             var entityModel = _uow.Test.Get(test.Id).ToTestDto();
-            int correct = 0;
-            int incorrect = 0;
-            foreach(var question in entityModel.Questions)
-            {
-                foreach(var answer in question.Answers)
-                {
-                    if (answer.IsCorrect != test.Questions.FirstOrDefault(x => x.Id == question.Id).
-                        Answers.FirstOrDefault(a => a.Id == answer.Id).IsCorrect)
-                    {
-                        incorrect++;
-                    }else
-                    {
-                        correct++;
-                    }
-                }
-            }
-            return new TestResultDTO()
-            {
-                CorrectAnswers = correct,
-                IncorrectAnswers = incorrect,
-            };
-            //List<AnswerDTO> lhs = entityModel.Answers.ToList();
-           // List<string> rhs = new List<string>();
-            /*foreach (var answer in test.)
+            List<AnswerDTO> lhs = entityModel.Answers.ToList();
+            List<string> rhs = new List<string>();
+            foreach (var answer in test.Answers)
             {
                 if (!ReferenceEquals(answer.Value, null))
                     rhs.Add(answer.Value);
@@ -102,7 +81,6 @@ namespace BLL.Services.Implementation
                 GoodAnswers = goodAnswers,
                 BadAnswers = badAnswers
             };
-            */
         }
     }
 }

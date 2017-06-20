@@ -34,7 +34,7 @@ namespace WebUI.Util
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IRoleService>().To<RoleService>();
             kernel.Bind<ITestService>().To<TestService>();
-            kernel.Bind<IProfileService>().To<ProfileService>();
+          
         }
     }
 }

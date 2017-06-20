@@ -38,11 +38,11 @@ namespace WebUI.Controllers
            
             }
             */
-            UserDTO user = new BLL.DTO.UserDTO() { Email = "1234@mail.ru", Login = "logggg", Password = "12345678910" };
+            UserDTO user = new BLL.DTO.UserDTO() { Email = "1234@mail.ru", Name = "logggg", Password = "12345678910" };
             RoleDTO role = rsrv.GetRole(3);
             user.Roles.Add(role);
             srv.CreateUser(user);
-            return role.Type;
+            return role.Name;
         }
             
         

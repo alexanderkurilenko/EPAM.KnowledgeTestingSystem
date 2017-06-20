@@ -14,18 +14,17 @@ namespace DAL.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private AnswerRepository answerRepository;
-        private ProfileRepository profileRepository;
         private QuestionRepository questionRepository;
         private TestResultRepository testResultRepository;
         private RoleRepository roleRepository;
         private TestRepository testRepository;
         private UserRepository userRepository;
 
-        private KnowledgeSystemDbContext db;
+        private EpamKnowledgeSystemDbContext db;
 
         public UnitOfWork(string connection)
         {
-            db = new KnowledgeSystemDbContext(connection);
+            db = new EpamKnowledgeSystemDbContext(connection);
             //IKernel ninjectKernel = new StandardKernel(new DalDependency(connection));
             //db = ninjectKernel.Get<KnowledgeSystemDbContext>();
         }
@@ -40,16 +39,7 @@ namespace DAL.Repositories
             }
         }
 
-        public IProfileRepository Profiles
-        {
-            get
-            {
-                if (profileRepository == null)
-                    profileRepository = new ProfileRepository(db);
-                return profileRepository;
-            }
-        }
-
+        
         public IQuestionRepository Questions
         {
             get

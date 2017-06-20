@@ -54,7 +54,7 @@ namespace DAL.Repositories
 
         public Role GetRoleByName(string name)
         {
-            return db.Set<Role>().FirstOrDefault(role => role.Type.ToLower() == name.ToLower());
+            return db.Set<Role>().FirstOrDefault(role => role.Name.ToLower() == name.ToLower());
         }
 
         public void Update(Role item)

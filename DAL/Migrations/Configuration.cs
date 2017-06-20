@@ -5,15 +5,14 @@ namespace DAL.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DAL.ORM.KnowledgeSystemDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DAL.ORM.EpamKnowledgeSystemDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "DAL.ORM.KnowledgeSystemDbContext";
         }
 
-        protected override void Seed(DAL.ORM.KnowledgeSystemDbContext context)
+        protected override void Seed(DAL.ORM.EpamKnowledgeSystemDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

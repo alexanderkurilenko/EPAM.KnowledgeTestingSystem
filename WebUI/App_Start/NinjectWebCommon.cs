@@ -41,7 +41,7 @@ namespace WebUI.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var modules = new INinjectModule[] { new BLLNinjectModule("name = KnowledgeSystemDbContext") };
+            var modules = new INinjectModule[] { new BLLNinjectModule("name = DefaultConnection") };
             var kernel = new StandardKernel(modules);
             try
             {

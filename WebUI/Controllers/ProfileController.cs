@@ -14,23 +14,19 @@ namespace WebUI.Controllers
     {
         private readonly IUserService _userService;
         private readonly ITestService _testService;
-        private readonly IProfileService _profileService;
+    
 
-        public ProfileController(IUserService service, ITestService testResult,IProfileService profileService)
+        public ProfileController(IUserService service, ITestService testResult)
         {
             _userService = service;
             _testService = testResult;
-            _profileService = profileService;
+         
         }
         // GET: Profile
-        public ActionResult Information()
+        public String Information()
         {
-            var profile = new ProfileViewModel();
-            var user = new UserViewModel();
-            var model = new UserDataViewModel();
-            user=_userService.GetUserByEmail(User.Identity.Name).ToMvcUser();
-            profile = _userService.GetUserByEmail(User.Identity.Name).UserProfile.ToMvcProfile();
-            return View(model);
+            
+            return "lalka";
         }
     }
 }

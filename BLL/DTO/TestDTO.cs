@@ -17,7 +17,7 @@ namespace BLL.DTO
 
         public string Name { get; set; }
 
-        public int Time { get; set; }
+        public TimeSpan Time { get; set; }
         public string Description { get; set; }
         public int GoodAnswers { get; set; }
 

@@ -16,6 +16,11 @@ namespace WebUI.ViewModels
         [Display(Name = "Enter your Login")]
         public string Login{ get; set; }
 
+        [Display(Name = "Enter your age")]
+        [Range(0, 99, ErrorMessage = "Invalid field of age!")]
+        public int Age { get; set; }
+
+
         [Display(Name = "Enter your login(e-mail)")]
         [Required(ErrorMessage = "The field can not be empty!")]
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Incorrect email")]

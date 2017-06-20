@@ -179,7 +179,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Mapper.cs" />
     <Compile Include="Infrastructure\Providers\CustomMembershipProvider.cs" />
     <Compile Include="Infrastructure\Providers\CustomRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

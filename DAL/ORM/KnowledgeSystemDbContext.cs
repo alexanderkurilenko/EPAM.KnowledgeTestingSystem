@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace DAL.ORM
 {
-    public class KnowledgeSystemDbContext:DbContext
+    public class EpamKnowledgeSystemDbContext:DbContext
     {
-        static KnowledgeSystemDbContext()
+        static EpamKnowledgeSystemDbContext()
         {
-            Database.SetInitializer<KnowledgeSystemDbContext>(new DbContextInitializer());
+            
+            Database.SetInitializer<EpamKnowledgeSystemDbContext>(new DbContextInitializer());
         }
-        public KnowledgeSystemDbContext() { }
-        public KnowledgeSystemDbContext(string connectionString) : base(connectionString)
+        public EpamKnowledgeSystemDbContext() { }
+        public EpamKnowledgeSystemDbContext(string connectionString) : base(connectionString)
         {
 
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Profile> Profiles { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Role> Roles { get; set; }

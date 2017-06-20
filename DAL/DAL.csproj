@@ -74,9 +74,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Configurations\DalDependency.cs" />
+    <Compile Include="Migrations\201706201514437_1.cs" />
+    <Compile Include="Migrations\201706201514437_1.Designer.cs">
+      <DependentUpon>201706201514437_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706201520408_2.cs" />
+    <Compile Include="Migrations\201706201520408_2.Designer.cs">
+      <DependentUpon>201706201520408_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\Configurations\DalDependency.cs" />
     <Compile Include="Interfaces\IAnswerRepository.cs" />
-    <Compile Include="Interfaces\IProfileRepository.cs" />
     <Compile Include="Interfaces\IQuestionRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IResultRepository.cs" />
@@ -84,75 +92,9 @@
     <Compile Include="Interfaces\ITestRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Migrations\201706142023453_3.cs" />
-    <Compile Include="Migrations\201706142023453_3.Designer.cs">
-      <DependentUpon>201706142023453_3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706142115129_5.cs" />
-    <Compile Include="Migrations\201706142115129_5.Designer.cs">
-      <DependentUpon>201706142115129_5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706171003403_6.cs" />
-    <Compile Include="Migrations\201706171003403_6.Designer.cs">
-      <DependentUpon>201706171003403_6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706171009014_7.cs" />
-    <Compile Include="Migrations\201706171009014_7.Designer.cs">
-      <DependentUpon>201706171009014_7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706171016337_8.cs" />
-    <Compile Include="Migrations\201706171016337_8.Designer.cs">
-      <DependentUpon>201706171016337_8.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706171339474_9.cs" />
-    <Compile Include="Migrations\201706171339474_9.Designer.cs">
-      <DependentUpon>201706171339474_9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706171349524_10.cs" />
-    <Compile Include="Migrations\201706171349524_10.Designer.cs">
-      <DependentUpon>201706171349524_10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706171806512_11.cs" />
-    <Compile Include="Migrations\201706171806512_11.Designer.cs">
-      <DependentUpon>201706171806512_11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706181320499_12.cs" />
-    <Compile Include="Migrations\201706181320499_12.Designer.cs">
-      <DependentUpon>201706181320499_12.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706181944507_13.cs" />
-    <Compile Include="Migrations\201706181944507_13.Designer.cs">
-      <DependentUpon>201706181944507_13.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706191843261_20.cs" />
-    <Compile Include="Migrations\201706191843261_20.Designer.cs">
-      <DependentUpon>201706191843261_20.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706191845487_14.cs" />
-    <Compile Include="Migrations\201706191845487_14.Designer.cs">
-      <DependentUpon>201706191845487_14.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706192009477_15.cs" />
-    <Compile Include="Migrations\201706192009477_15.Designer.cs">
-      <DependentUpon>201706192009477_15.cs</DependentUpon>
-    </Compile>
     <Compile Include="ORM\Answer.cs" />
     <Compile Include="ORM\DbContextInitializer.cs" />
-    <Compile Include="ORM\Migrations\201706141607279_InitialCreate.cs" />
-    <Compile Include="ORM\Migrations\201706141607279_InitialCreate.Designer.cs">
-      <DependentUpon>201706141607279_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ORM\Migrations\201706141620464_1.cs" />
-    <Compile Include="ORM\Migrations\201706141620464_1.Designer.cs">
-      <DependentUpon>201706141620464_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ORM\Migrations\201706141844111_2.cs" />
-    <Compile Include="ORM\Migrations\201706141844111_2.Designer.cs">
-      <DependentUpon>201706141844111_2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ORM\Migrations\Configuration.cs" />
     <Compile Include="ORM\KnowledgeSystemDbContext.cs" />
-    <Compile Include="ORM\Profile.cs" />
     <Compile Include="ORM\Question.cs" />
     <Compile Include="ORM\Role.cs" />
     <Compile Include="ORM\RoleTypes.cs" />
@@ -161,7 +103,6 @@
     <Compile Include="ORM\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnswerRepository.cs" />
-    <Compile Include="Repositories\ProfileRepository.cs" />
     <Compile Include="Repositories\QuestionRepository.cs" />
     <Compile Include="Repositories\ResultRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
@@ -174,56 +115,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706142023453_3.resx">
-      <DependentUpon>201706142023453_3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706201514437_1.resx">
+      <DependentUpon>201706201514437_1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706142115129_5.resx">
-      <DependentUpon>201706142115129_5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706171003403_6.resx">
-      <DependentUpon>201706171003403_6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706171009014_7.resx">
-      <DependentUpon>201706171009014_7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706171016337_8.resx">
-      <DependentUpon>201706171016337_8.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706171339474_9.resx">
-      <DependentUpon>201706171339474_9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706171349524_10.resx">
-      <DependentUpon>201706171349524_10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706171806512_11.resx">
-      <DependentUpon>201706171806512_11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706181320499_12.resx">
-      <DependentUpon>201706181320499_12.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706181944507_13.resx">
-      <DependentUpon>201706181944507_13.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706191843261_20.resx">
-      <DependentUpon>201706191843261_20.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706191845487_14.resx">
-      <DependentUpon>201706191845487_14.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706192009477_15.resx">
-      <DependentUpon>201706192009477_15.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ORM\Migrations\201706141607279_InitialCreate.resx">
-      <DependentUpon>201706141607279_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ORM\Migrations\201706141620464_1.resx">
-      <DependentUpon>201706141620464_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ORM\Migrations\201706141844111_2.resx">
-      <DependentUpon>201706141844111_2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706201520408_2.resx">
+      <DependentUpon>201706201520408_2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
