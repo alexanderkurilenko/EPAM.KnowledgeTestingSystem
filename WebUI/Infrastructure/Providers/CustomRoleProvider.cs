@@ -46,6 +46,8 @@ namespace WebUI.Infrastructure.Providers
             }
             return roles.ToArray();
         }
+
+
         public override string ApplicationName
         {
             get

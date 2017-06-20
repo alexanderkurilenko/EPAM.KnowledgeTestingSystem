@@ -15,12 +15,9 @@ namespace BLL.DTO
 
         public string Description { get; set; }
 
-        public  ICollection<UserDTO> Users { get; set; }
+        public  IList<UserDTO> Users { get; set; }
 
-        public RoleDTO()
-        {
-            Users = new List<UserDTO>();
-        }
+       
     }
 }
 

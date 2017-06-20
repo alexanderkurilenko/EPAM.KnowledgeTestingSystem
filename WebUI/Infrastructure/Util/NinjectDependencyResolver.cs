@@ -28,10 +28,13 @@ namespace WebUI.Util
         {
             return kernel.GetAll(serviceType);
         }
+
         private void AddBindings()
         {
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IRoleService>().To<RoleService>();
+            kernel.Bind<ITestService>().To<TestService>();
+            kernel.Bind<IProfileService>().To<ProfileService>();
         }
     }
 }

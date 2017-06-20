@@ -124,6 +124,18 @@
     <Compile Include="Migrations\201706181944507_13.Designer.cs">
       <DependentUpon>201706181944507_13.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706191843261_20.cs" />
+    <Compile Include="Migrations\201706191843261_20.Designer.cs">
+      <DependentUpon>201706191843261_20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706191845487_14.cs" />
+    <Compile Include="Migrations\201706191845487_14.Designer.cs">
+      <DependentUpon>201706191845487_14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706192009477_15.cs" />
+    <Compile Include="Migrations\201706192009477_15.Designer.cs">
+      <DependentUpon>201706192009477_15.cs</DependentUpon>
+    </Compile>
     <Compile Include="ORM\Answer.cs" />
     <Compile Include="ORM\DbContextInitializer.cs" />
     <Compile Include="ORM\Migrations\201706141607279_InitialCreate.cs" />
@@ -191,6 +203,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706181944507_13.resx">
       <DependentUpon>201706181944507_13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706191843261_20.resx">
+      <DependentUpon>201706191843261_20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706191845487_14.resx">
+      <DependentUpon>201706191845487_14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706192009477_15.resx">
+      <DependentUpon>201706192009477_15.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ORM\Migrations\201706141607279_InitialCreate.resx">
       <DependentUpon>201706141607279_InitialCreate.cs</DependentUpon>

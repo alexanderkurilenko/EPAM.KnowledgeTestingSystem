@@ -25,7 +25,7 @@ namespace BLL.Mapper
                 Id = userEntity.Id,              
                 Email = userEntity.Email,
                 Password = userEntity.Password, 
-                Roles = userEntity.Roles.ToRoleDtoCollection().ToList(),
+                Roles = userEntity.Roles?.Select(r => r.ToRoleDto()).ToList(),
                 Login=userEntity.Login,
                 UserProfile=userEntity.UserProfile.ToProfileDto()
             };
@@ -44,7 +44,7 @@ namespace BLL.Mapper
                 Email = userDto.Email,
                 Password = userDto.Password,
                 Login = userDto.Login,
-                Roles = userDto.Roles.ToRoleCollection().ToList(),
+                Roles = userDto.Roles.Select(r => r.ToRoleEntity()).ToList(),
                 UserProfile=userDto.UserProfile.ToProfileEntity()
             };
         }
@@ -61,7 +61,6 @@ namespace BLL.Mapper
                 FirstName = profileEntity.FirstName,
                 SurName = profileEntity.SurName,
                 Id=profileEntity.Id,
-                User=profileEntity.User.ToUserDto(),
                 Tests=profileEntity.Tests.ToTestDTOCollection().ToList()
             };
         }
@@ -81,11 +80,7 @@ namespace BLL.Mapper
         #endregion
 
         #region test mapping
-        /// <summary>
-        /// The method converts an object of type Test to an object of type TestDTO.
-        /// </summary>
-        /// <param name="testEntity">An object of type Test.</param>
-        /// <returns>An object of type TestDTO.</returns>
+      
         public static TestDTO ToTestDto(this Test testEntity)
         {
             if (ReferenceEquals(testEntity, null))
@@ -102,11 +97,7 @@ namespace BLL.Mapper
             };
         }
 
-        /// <summary>
-        /// The method converts an object of type TestDTO to an object of type Test.
-        /// </summary>
-        /// <param name="testDto">An object of type TestDTO.</param>
-        /// <returns>An object of type Test.</returns>
+   
         public static Test ToTestEntity(this TestDTO testDto)
         {
             return new Test()
@@ -226,7 +217,6 @@ namespace BLL.Mapper
                 Type=roleEntity.Type,
                 Description=roleEntity.Description,
 
-                Users=roleEntity.Users.ToUserDtoCollection().ToList()
 
             };
         }
@@ -239,7 +229,7 @@ namespace BLL.Mapper
                 Id=roleDto.Id,
                 Type=roleDto.Type,
                 Description=roleDto.Description,
-                Users=roleDto.Users.ToUserCollection().ToList()
+
             };
         }
 
@@ -279,7 +269,7 @@ namespace BLL.Mapper
             }
         }
 
-        private static IEnumerable<User> ToUserCollection(this IEnumerable<UserDTO> collectionUserDto)
+        private static IEnumerable<User> ToUserCollection(this IList<UserDTO> collectionUserDto)
         {
             foreach (var userDTO in collectionUserDto)
             {
@@ -287,7 +277,7 @@ namespace BLL.Mapper
             }
         }
 
-        private static IEnumerable<UserDTO> ToUserDtoCollection(this IEnumerable<User> collectionUser)
+        private static IEnumerable<UserDTO> ToUserDtoCollection(this IList<User> collectionUser)
         {
             foreach (var user in collectionUser)
             {
@@ -295,20 +285,24 @@ namespace BLL.Mapper
             }
         }
 
-        private static IEnumerable<Role> ToRoleCollection(this IEnumerable<RoleDTO> collectionRoleDto)
+        private static IEnumerable<Role> ToRoleCollection(this IList<RoleDTO> collectionRoleDto)
         {
-            foreach (var roleDTO in collectionRoleDto)
+            var rslt = new List<Role>();
+            foreach (var role in collectionRoleDto)
             {
-                yield return roleDTO.ToRoleEntity();
+                rslt.Add(role.ToRoleEntity());
             }
+            return rslt;
         }
 
-        private static IEnumerable<RoleDTO> ToRoleDtoCollection(this IEnumerable<Role> collectionRole)
+        private static IEnumerable<RoleDTO> ToRoleDtoCollection(this IList<Role> collectionRole)
         {
+            var rslt = new List<RoleDTO>();
             foreach (var role in collectionRole)
             {
-                yield return role.ToRoleDto();
+                rslt.Add(role.ToRoleDto());
             }
+            return rslt;
         }
 
         private static IEnumerable<Answer> ToAnswerCollection(this IEnumerable<AnswerDTO> collectionAnswerDto)

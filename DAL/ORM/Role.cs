@@ -14,11 +14,8 @@ namespace DAL.ORM
 
         public string Description { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public  IList<User> Users { get; set; }
 
-        public Role()
-        {
-            Users = new List<User>();
-        }
+        
     }
 }

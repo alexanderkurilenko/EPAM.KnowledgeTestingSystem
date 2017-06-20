@@ -18,13 +18,10 @@ namespace DAL.ORM
 
         public string SurName { get; set; }
 
-        public virtual User User { get; set; }
+        public  User User { get; set; }
 
-        public virtual ICollection<Test> Tests { get; set; }
+        public  ICollection<Test> Tests { get; set; }
 
-        public Profile()
-        {
-            Tests = new List<Test>();
-        }
+       
     }
 }

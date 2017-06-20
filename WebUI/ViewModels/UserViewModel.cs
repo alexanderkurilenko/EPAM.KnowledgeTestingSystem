@@ -54,6 +54,9 @@ namespace WebUI.ViewModels
 
         [Display(Name = "Roles")]
         public IList<RoleDTO> Roles { get; set; }
-       
+
+        [Display(Name = "Profile")]
+        public ProfileDTO UserProfile { get; set; }
+
     }
 }

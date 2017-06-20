@@ -16,13 +16,14 @@ namespace BLL.DTO
 
         public TimeSpan Time { get; set; }
 
-        public  ICollection<QuestionDTO> Questions { get; set; }
-        public  ICollection<TestResultDTO> Result { get; set; }
-        public  ICollection<ProfileDTO> Profiles { get; set; }
+        public  IList<QuestionDTO> Questions { get; set; }
+        public  IList<TestResultDTO> Result { get; set; }
+        public  IList<ProfileDTO> Profiles { get; set; }
 
         public TestDTO()
         {
             Questions = new List<QuestionDTO>();
+            Result = new List<TestResultDTO>();
         }
     }
 }

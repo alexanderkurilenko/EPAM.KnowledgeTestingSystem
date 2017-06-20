@@ -16,14 +16,10 @@ namespace DAL.ORM
 
         public string Password { get; set; }
 
-        public virtual ICollection<Role> Roles { get; set; }
+        public IList<Role> Roles { get; set; }
 
-        public virtual Profile UserProfile { get; set; }
+        public Profile UserProfile { get; set; }
 
-        public User()
-        {
-            Roles = new List<Role>();
-            
-        } 
+        
     }
 }

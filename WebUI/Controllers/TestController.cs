@@ -5,15 +5,18 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.Services.Implementation;
 using BLL.Services;
+using BLL.DTO;
 
 namespace WebUI.Controllers
 {
     public class TestController : Controller
     {
         IUserService srv;
-        public TestController(IUserService service)
+        IRoleService rsrv;
+        public TestController(IUserService service,IRoleService serv)
         {
             srv = service;
+            rsrv = serv;
         }
 
         // GET: Test
@@ -35,9 +38,11 @@ namespace WebUI.Controllers
            
             }
             */
-            srv.CreateUser(new BLL.DTO.UserDTO() { Email = "123@mail.ru", Login = "logggg", Password = "12345678910" });
-
-            return "hello";
+            UserDTO user = new BLL.DTO.UserDTO() { Email = "1234@mail.ru", Login = "logggg", Password = "12345678910" };
+            RoleDTO role = rsrv.GetRole(3);
+            user.Roles.Add(role);
+            srv.CreateUser(user);
+            return role.Type;
         }
             
         

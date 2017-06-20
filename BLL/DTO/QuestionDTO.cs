@@ -14,14 +14,13 @@ namespace BLL.DTO
 
         public string Text { get; set; }
 
-        public virtual ICollection<AnswerDTO> Answers { get; set; }
-
-
+        public ICollection<AnswerDTO> Answers { get; set; }
 
         public QuestionDTO()
         {
             Answers = new List<AnswerDTO>();
         }
 
+        
     }
 }

@@ -20,14 +20,13 @@ namespace BLL.DTO
         public string NewPassword { get; set; }
         public string ConfirmPassword { get; set; }
 
-        public ICollection<RoleDTO> Roles { get; set; }
-
+        public IList<RoleDTO> Roles { get; set; }
         public ProfileDTO UserProfile { get; set; }
 
         public UserDTO()
         {
             Roles = new List<RoleDTO>();
-
         }
+        
     }
 }

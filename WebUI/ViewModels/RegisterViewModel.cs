@@ -14,11 +14,11 @@ namespace WebUI.ViewModels
         [Required(ErrorMessage = "Enter your Login")]
         [StringLength(40, ErrorMessage = "The name must contain at least {2} characters", MinimumLength = 6)]
         [Display(Name = "Enter your Login")]
-        public string login{ get; set; }
+        public string Login{ get; set; }
 
         [Display(Name = "Enter your login(e-mail)")]
         [Required(ErrorMessage = "The field can not be empty!")]
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Uncurrect email")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Incorrect email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Enter your password")]

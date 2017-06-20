@@ -14,15 +14,9 @@ namespace DAL.ORM
 
         public string Text { get; set; }
 
-        public virtual ICollection<Answer> Answers { get; set; }
+        public ICollection<Answer> Answers { get; set; }
 
-        
-
-        public Question()
-        {
-            Answers = new List<Answer>();
-        }
-
+ 
         
     }
 }

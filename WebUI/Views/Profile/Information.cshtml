@@ -1,0 +1,54 @@
+﻿
+
+@model WebUI.ViewModels.UserDataViewModel
+@{
+    ViewBag.Title = "Profile";
+}
+<div id="results">
+    <h2>Profile Information</h2>
+    <div class="row content">
+        <div class="col-sm-3 text-left">
+            <div class="container">
+                <strong>
+                    @Html.DisplayNameFor(model => model.User.Email):
+                </strong>
+            </div>
+        </div>
+        <div class="col-sm-9 text-left">
+            <div class="container">
+                @Html.DisplayFor(modelItem => Model.User.Email)
+            </div>
+        </div>
+        <div class="col-sm-3 text-left">
+            <div class="container">
+                <strong>
+                    @Html.DisplayNameFor(model => model.User.Login):
+                </strong>
+            </div>
+        </div>
+        <div class="col-sm-9 text-left">
+            <div class="container">
+                @Html.DisplayFor(modelItem => Model.User.Login)
+            </div>
+        </div>
+        
+        <div class="col-sm-3 text-left">
+            <div class="container">
+                <strong>
+                    @Html.DisplayNameFor(model => model.User.Roles):
+                </strong>
+            </div>
+        </div>
+        <div class="col-sm-9 text-left">
+            <div class="container">
+                @foreach (var elem in Model.User.Roles)
+                {
+                    <span> @Html.DisplayFor(modelItem => elem.Type);</span>
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <h2>Your completed tests</h2>
+    

@@ -18,6 +18,6 @@ namespace BLL.DTO
 
         public int IncorrectAnswers { get; set; }
 
-        public virtual TestDTO Test { get; set; }
+        public  TestDTO Test { get; set; }
     }
 }
