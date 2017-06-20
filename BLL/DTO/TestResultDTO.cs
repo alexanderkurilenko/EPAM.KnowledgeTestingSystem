@@ -9,15 +9,10 @@ namespace BLL.DTO
     public class TestResultDTO
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
-
-        public DateTime DateComplete { get; set; }
-
-        public int CorrectAnswers { get; set; }
-
-        public int IncorrectAnswers { get; set; }
-
-        public  TestDTO Test { get; set; }
+        public int GoodAnswers { get; set; }
+        public int BadAnswers { get; set; }
+        public UserDTO User { get; set; }
+        public DateTime DateCompleted { get; set; }
     }
 }

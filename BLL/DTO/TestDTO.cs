@@ -8,22 +8,23 @@ namespace BLL.DTO
 {
     public class TestDTO
     {
-        public int Id { get; set; }
-
-        public string Title { get; set; }
-
-        public string Topic { get; set; }
-
-        public TimeSpan Time { get; set; }
-
-        public  IList<QuestionDTO> Questions { get; set; }
-        public  IList<TestResultDTO> Result { get; set; }
-        public  IList<ProfileDTO> Profiles { get; set; }
-
         public TestDTO()
         {
             Questions = new List<QuestionDTO>();
-            Result = new List<TestResultDTO>();
+            Answers = new List<AnswerDTO>();
         }
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public int Time { get; set; }
+        public string Description { get; set; }
+        public int GoodAnswers { get; set; }
+
+        public int BadAnswers { get; set; }
+        public bool IsValid { get; set; }
+        public string Creator { get; set; }
+        public IList<AnswerDTO> Answers { get; set; }
+        public IList<QuestionDTO> Questions { get; set; }
     }
 }

@@ -10,17 +10,9 @@ namespace BLL.DTO
     {
         public int Id { get; set; }
 
-        public string Type { get; set; }
+        public string Value { get; set; }
 
-        public string Text { get; set; }
-
-        public ICollection<AnswerDTO> Answers { get; set; }
-
-        public QuestionDTO()
-        {
-            Answers = new List<AnswerDTO>();
-        }
-
-        
+        public int TestId { get; set; }
+        public TestDTO Test { get; set; }
     }
 }
