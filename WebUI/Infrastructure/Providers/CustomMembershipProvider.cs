@@ -42,9 +42,9 @@ namespace WebUI.Infrastructure.Providers
             RoleDTO userRole = _roleService.GetRole(3);
             if (userRole != null)
             {
-                userDTO.Roles.Add(adminRole);
+                //userDTO.Roles.Add(adminRole);
                  //userDTO.Roles.Add(moderatorRole);
-               // userDTO.Roles.Add(userRole);
+               userDTO.Roles.Add(userRole);
             }
 
             _userService.CreateUser(userDTO);

@@ -25,23 +25,30 @@
                     @if (Context.User.IsInRole("User"))
                     {
                         <li>@Html.ActionLink("Create test", "CreateTest", "Test")</li>
+                        <li>@Html.ActionLink("Profile", "Information", "Profile")</li>
+                        <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
+                        <li>@Html.ActionLink("Log Out ", "LogOff", "Account")</li>
                     }
                     @if (Context.User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Edit Users", "UsersEditor", "Admin")</li>
+                        <li>@Html.ActionLink("Profile", "Information", "Profile")</li>
+                        <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
+                        <li>@Html.ActionLink("Log Out ", "LogOff", "Account")</li>
                     }
                     @if (User.IsInRole("Moderator"))
                     {
                         <li>@Html.ActionLink("Moderator room", "TestsEditor", "Moderator")</li>
+                        <li>@Html.ActionLink("Profile", "Information", "Profile")</li>
+                        <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
+                        <li>@Html.ActionLink("Log Out ", "LogOff", "Account")</li>
                     }
                     <li>@Html.ActionLink("Statistics", "Statistics", "Test")</li>
                     <li>@Html.ActionLink("About", "About", "Test")</li>
-                    <li>@Html.ActionLink("Profile", "Infromation", "Profile")</li>
-                    <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
-                    <li>@Html.ActionLink("Log Out ", "LogOff", "Account")</li>
+                    
                 </ul>
                
-                @Html.Partial("_LoginPartial", new { @class = "nav navbar-nav navbar-right" })
+
             </div>
         </div>
     </div>
@@ -53,8 +60,7 @@
         <div class="container">
             <ul class="nav nav-pills nav-justified">
                 <li><a class="text-muted" href="http://www.w3schools.com/bootstrap/">© @DateTime.Now.Year Knowledge control system.</a></li>
-                <li><a class="text-muted" href="http://www.w3schools.com/bootstrap/">Learn more</a></li>
-                <li><a class="text-muted" href="http://www.w3schools.com/bootstrap/">By Artyom Kozlov</a></li>
+                <li><a class="text-muted" href="vk.com/alexander_kurilenko">By Kurilenko</a></li>
             </ul>
         </div>
     </footer>
