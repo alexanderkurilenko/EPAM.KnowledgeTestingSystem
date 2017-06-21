@@ -60,8 +60,6 @@ namespace BLL.Mapper
         /// <returns>An object of type RoleDTO.</returns>
         public static RoleDTO ToRoleDto(this Role roleEntity)
         {
-            if (ReferenceEquals(roleEntity, null))
-                return null;
             return new RoleDTO()
             {
                 Id = roleEntity.Id,
@@ -165,6 +163,7 @@ namespace BLL.Mapper
             {
                 Id = answerDto.Id,
                 Value = answerDto.Value
+
             };
         }
 

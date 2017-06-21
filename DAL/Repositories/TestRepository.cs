@@ -52,9 +52,17 @@ namespace DAL.Repositories
             return db.Set<Test>().ToList();
         }
 
-        public void Update(Test item)
+        public void Update(Test test)
         {
-            db.Entry(item).State = EntityState.Modified;
+            var entity = db.Set<Test>().Find(test.Id);
+            entity.Name = test.Name;
+            entity.Questions = test.Questions;
+            entity.Answers = test.Answers;
+            entity.GoodAnswers = test.GoodAnswers;
+            entity.BadAnswers = test.BadAnswers;
+            entity.Time = test.Time;
+            entity.TestResultId = test.TestResultId;
+            db.Entry(entity).State = EntityState.Modified;
         }
     }
 }

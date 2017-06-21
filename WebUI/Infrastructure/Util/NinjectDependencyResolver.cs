@@ -1,6 +1,7 @@
 ﻿using BLL.Services;
 using BLL.Services.Implementation;
 using Ninject;
+using Ninject.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,9 +32,12 @@ namespace WebUI.Util
 
         private void AddBindings()
         {
-            kernel.Bind<IUserService>().To<UserService>();
-            kernel.Bind<IRoleService>().To<RoleService>();
-            kernel.Bind<ITestService>().To<TestService>();
+            kernel.Bind<IUserService>().To<UserService>().InRequestScope();
+            kernel.Bind<IRoleService>().To<RoleService>().InRequestScope();
+            kernel.Bind<ITestService>().To<TestService>().InRequestScope();
+            kernel.Bind<ITestResultService>().To<TestResultService>().InRequestScope();
+            kernel.Bind<IAnswerService>().To<AnswerService>().InRequestScope();
+            kernel.Bind<IQuestionService>().To<QuestionService>().InRequestScope();
           
         }
     }

@@ -1,0 +1,57 @@
+﻿
+@model WebUI.ViewModels.StatisticsViewModel
+@{
+    ViewBag.Title = "Statistics";
+}
+<div id="results">
+    <h1>Statistics</h1>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StatisticsOfTests.GetEnumerator().Current.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatisticsOfTests.GetEnumerator().Current.Creator)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatisticsOfTests.GetEnumerator().Current.GoodAnswers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatisticsOfTests.GetEnumerator().Current.BadAnswers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatisticsOfTests.GetEnumerator().Current.Answers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatisticsOfTests.GetEnumerator().Current.Percentage)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.StatisticsOfTests)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creator)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoodAnswers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BadAnswers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Answers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Percentage)
+                </td>
+            </tr>
+        }
+
+    </table>
+   
+</div>

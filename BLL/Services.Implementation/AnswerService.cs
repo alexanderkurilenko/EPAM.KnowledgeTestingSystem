@@ -21,16 +21,19 @@ namespace BLL.Services.Implementation
         public void CreateAnswer(AnswerDTO answer)
         {
             _uow.Answers.Create(answer.ToAnswerEntity());
+            _uow.Save();
         }
 
         public void DeleteAnswer(int id)
         {
             _uow.Answers.Delete(id);
+            _uow.Save();
         }
 
         public void DeleteAnswer(AnswerDTO answer)
         {
             _uow.Answers.Delete(answer.ToAnswerEntity());
+            _uow.Save();
         }
 
         public IEnumerable<AnswerDTO> GetAllAnswers()
@@ -49,6 +52,7 @@ namespace BLL.Services.Implementation
         public void UpdateAnswer(AnswerDTO answer)
         {
             _uow.Answers.Update(answer.ToAnswerEntity());
+            _uow.Save();
         }
     }
 }

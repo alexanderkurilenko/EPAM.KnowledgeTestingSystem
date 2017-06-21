@@ -13,10 +13,10 @@ namespace DAL.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Value = c.String(),
-                        Test_Id = c.Int(),
+                        Test_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Tests", t => t.Test_Id)
+                .ForeignKey("dbo.Tests", t => t.Test_Id, cascadeDelete: true)
                 .Index(t => t.Test_Id);
             
             CreateTable(
@@ -25,7 +25,7 @@ namespace DAL.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Time = c.Time(nullable: false, precision: 7),
+                        Time = c.Int(nullable: false),
                         Description = c.String(),
                         GoodAnswers = c.Int(nullable: false),
                         BadAnswers = c.Int(nullable: false),
@@ -40,10 +40,10 @@ namespace DAL.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Value = c.String(),
-                        Test_Id = c.Int(),
+                        Test_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Tests", t => t.Test_Id)
+                .ForeignKey("dbo.Tests", t => t.Test_Id, cascadeDelete: true)
                 .Index(t => t.Test_Id);
             
             CreateTable(
@@ -55,10 +55,10 @@ namespace DAL.Migrations
                         DateComplete = c.DateTime(nullable: false),
                         GoodAnswers = c.Int(nullable: false),
                         BadAnswers = c.Int(nullable: false),
-                        User_Id = c.Int(),
+                        User_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Users", t => t.User_Id)
+                .ForeignKey("dbo.Users", t => t.User_Id, cascadeDelete: true)
                 .Index(t => t.User_Id);
             
             CreateTable(
@@ -84,33 +84,33 @@ namespace DAL.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.RoleUsers",
+                "dbo.UserRole",
                 c => new
                     {
-                        Role_Id = c.Int(nullable: false),
-                        User_Id = c.Int(nullable: false),
+                        UserId = c.Int(nullable: false),
+                        RoleId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Role_Id, t.User_Id })
-                .ForeignKey("dbo.Roles", t => t.Role_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.User_Id, cascadeDelete: true)
-                .Index(t => t.Role_Id)
-                .Index(t => t.User_Id);
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.TestResults", "User_Id", "dbo.Users");
-            DropForeignKey("dbo.RoleUsers", "User_Id", "dbo.Users");
-            DropForeignKey("dbo.RoleUsers", "Role_Id", "dbo.Roles");
+            DropForeignKey("dbo.UserRole", "RoleId", "dbo.Roles");
+            DropForeignKey("dbo.UserRole", "UserId", "dbo.Users");
             DropForeignKey("dbo.Questions", "Test_Id", "dbo.Tests");
             DropForeignKey("dbo.Answers", "Test_Id", "dbo.Tests");
-            DropIndex("dbo.RoleUsers", new[] { "User_Id" });
-            DropIndex("dbo.RoleUsers", new[] { "Role_Id" });
+            DropIndex("dbo.UserRole", new[] { "RoleId" });
+            DropIndex("dbo.UserRole", new[] { "UserId" });
             DropIndex("dbo.TestResults", new[] { "User_Id" });
             DropIndex("dbo.Questions", new[] { "Test_Id" });
             DropIndex("dbo.Answers", new[] { "Test_Id" });
-            DropTable("dbo.RoleUsers");
+            DropTable("dbo.UserRole");
             DropTable("dbo.Roles");
             DropTable("dbo.Users");
             DropTable("dbo.TestResults");

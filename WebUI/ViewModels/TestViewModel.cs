@@ -14,27 +14,27 @@ namespace WebUI.ViewModels
 
         [Display(Name = "Test name")]
         [StringLength(40, ErrorMessage = "The name must contain at least {2} characters", MinimumLength = 6)]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         [Display(Name = "Test time")]
         [Range(1, 60, ErrorMessage = "Invalid field of Time! Enter range from 5 to 40 minutes.")]
-        public TimeSpan Time { get; set; }
-
+        public int Time { get; set; }
         [Display(Name = "Discription")]
-        public string Topic{ get; set; }
+        public string Discription { get; set; }
 
-  
+        [Display(Name = "Good answers")]
+        public int GoodAnswers { get; set; }
+
+        [Display(Name = "bad answers")]
+        public int BadAnswers { get; set; }
         [Display(Name = "Test is valid")]
         public bool IsValid { get; set; }
 
-        public IList<QuestionDTO> Questions { get; set; }
-        public IList<TestResultDTO> Result { get; set; }
-
-        public TestViewModel()
-        {
-            Questions = new List<QuestionDTO>();
-            Result = new List<TestResultDTO>();
-        }
-
+        [Display(Name = "Creator")]
+        public string Creator { get; set; }
+        public List<AnswerDTO> Answers { get; set; }
+        public List<QuestionDTO> Questions { get; set; }
+        public int? TestResultId { get; set; }
+        public TestResultDTO TestResult { get; set; }
     }
 }

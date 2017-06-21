@@ -20,16 +20,19 @@ namespace BLL.Services.Implementation
         public void CreateQuestion(QuestionDTO question)
         {
             _uow.Questions.Create(question.ToQuestionEntity());
+            _uow.Save();
         }
 
         public void DeleteQuestion(int id)
         {
             _uow.Questions.Delete(id);
+            _uow.Save();
         }
 
         public void DeleteQuestion(QuestionDTO question)
         {
             _uow.Questions.Delete(question.ToQuestionEntity());
+            _uow.Save();
         }
 
         public IEnumerable<QuestionDTO> GetAllQuestions()
@@ -48,6 +51,7 @@ namespace BLL.Services.Implementation
         public void UpdateQuestion(QuestionDTO question)
         {
             _uow.Questions.Update(question.ToQuestionEntity());
+            _uow.Save();
         }
     }
 }

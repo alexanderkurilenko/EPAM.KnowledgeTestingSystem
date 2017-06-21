@@ -1,4 +1,5 @@
-﻿using DAL.ORM;
+﻿using BLL.Services;
+using DAL.ORM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-    public class RoleDTO
+    public class RoleDTO : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

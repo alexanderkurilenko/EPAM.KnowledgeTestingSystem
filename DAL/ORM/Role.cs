@@ -8,17 +8,18 @@ namespace DAL.ORM
 {
     public class Role
     {
+        
+        public virtual int Id { get; set; }
+
+        public virtual string Name { get; set; }
+
+        public virtual string Description { get; set; }
+
+        public virtual IList<User> Users { get; set; }
+
         public Role()
         {
             Users = new List<User>();
         }
-
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        public IList<User> Users { get; set; }
     }
 }

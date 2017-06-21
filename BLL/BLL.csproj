@@ -64,6 +64,7 @@
     <Compile Include="Services.Implementation\TestService.cs" />
     <Compile Include="Services.Implementation\UserService.cs" />
     <Compile Include="Services\IAnswerService.cs" />
+    <Compile Include="Services\IEntity.cs" />
     <Compile Include="Services\IQuestionService.cs" />
     <Compile Include="Services\IRoleService.cs" />
     <Compile Include="Services\ITestResultService.cs" />

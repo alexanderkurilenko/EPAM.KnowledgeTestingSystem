@@ -11,19 +11,19 @@ namespace WebUI.ViewModels
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Enter your Login")]
+        [Required(ErrorMessage = "Enter your name")]
         [StringLength(40, ErrorMessage = "The name must contain at least {2} characters", MinimumLength = 6)]
-        [Display(Name = "Enter your Login")]
-        public string Login{ get; set; }
+        [Display(Name = "Enter your name")]
+        public string Login { get; set; }
+
 
         [Display(Name = "Enter your age")]
         [Range(0, 99, ErrorMessage = "Invalid field of age!")]
         public int Age { get; set; }
 
-
         [Display(Name = "Enter your login(e-mail)")]
         [Required(ErrorMessage = "The field can not be empty!")]
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Incorrect email")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Uncurrect email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Enter your password")]

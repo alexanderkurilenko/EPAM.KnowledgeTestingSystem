@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
-    public class TestDTO
+    public class TestDTO : IEntity
     {
         public TestDTO()
         {
@@ -17,7 +18,7 @@ namespace BLL.DTO
 
         public string Name { get; set; }
 
-        public TimeSpan Time { get; set; }
+        public int Time { get; set; }
         public string Description { get; set; }
         public int GoodAnswers { get; set; }
 
@@ -26,5 +27,6 @@ namespace BLL.DTO
         public string Creator { get; set; }
         public IList<AnswerDTO> Answers { get; set; }
         public IList<QuestionDTO> Questions { get; set; }
+
     }
 }

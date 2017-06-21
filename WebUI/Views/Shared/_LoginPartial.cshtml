@@ -1,0 +1,38 @@
+﻿@using Microsoft.Ajax.Utilities
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                
+                <ul class="dropdown-menu">
+                    <li>
+                        @Html.ActionLink("My profile", "Information", "Profile")
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Admin room", "UsersEditor", "Admin")</li>
+                    }
+                    @if (User.IsInRole("Moderator"))
+                    {
+                        <li>@Html.ActionLink("Moderator room", "TestsEditor", "Moderator")</li>
+                    }
+                    <li>
+                        @Html.ActionLink("Settings", "Settings", "Profile")
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(" Login", "Login", "Account", new { id = "loginLink" }, new { @class = "glyphicon glyphicon-log-in" })</li>
+    </ul>
+}

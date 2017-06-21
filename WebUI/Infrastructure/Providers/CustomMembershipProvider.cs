@@ -25,6 +25,32 @@ namespace WebUI.Infrastructure.Providers
             _roleService = roleService;
         }
 
+        public bool CreateUser(string name, string email, string password, int age)
+        {
+
+            UserDTO userDTO = new UserDTO
+            {
+                Name = name,
+                Email = email,
+                Password = Crypto.HashPassword(password),
+                Age = age,
+                TestResults = new List<TestResultDTO>()
+            };
+
+            RoleDTO adminRole = _roleService.GetRole(2);
+            RoleDTO moderatorRole = _roleService.GetRole(1);
+            RoleDTO userRole = _roleService.GetRole(3);
+            if (userRole != null)
+            {
+                userDTO.Roles.Add(adminRole);
+                 //userDTO.Roles.Add(moderatorRole);
+               // userDTO.Roles.Add(userRole);
+            }
+
+            _userService.CreateUser(userDTO);
+            return true;
+        }
+
         public override bool ValidateUser(string email, string password)
         {
             UserDTO user = _userService.GetUserByEmail(email);
@@ -36,164 +62,21 @@ namespace WebUI.Infrastructure.Providers
             return false;
         }
 
-        public bool CreateUser(string login, string email, string password,int age)
-        {
-
-            UserDTO userDTO = new UserDTO
-            {
-                Name = login,
-                Email = email,
-                Password = Crypto.HashPassword(password),
-                Age = age,
-                TestResults = new List<TestResultDTO>()
-
-            };
-
-            // RoleDTO adminRole = _roleService.GetRole(1);
-            //  RoleDTO moderatorRole = _roleService.GetRole(2);
-            RoleDTO userRole = _roleService.GetRole(3);
-            if (userRole != null)
-            {
-                // userDTO.Roles.Add(adminRole);
-                // userDTO.Roles.Add(moderatorRole);
-                userDTO.Roles.Add(userRole);
-            }
-
-            _userService.CreateUser(userDTO);
-            return true;
-        }
-
-        public override string ApplicationName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override bool EnablePasswordReset
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override bool EnablePasswordRetrieval
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override int MaxInvalidPasswordAttempts
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override int MinRequiredNonAlphanumericCharacters
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override int MinRequiredPasswordLength
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override int PasswordAttemptWindow
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override MembershipPasswordFormat PasswordFormat
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override string PasswordStrengthRegularExpression
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override bool RequiresQuestionAndAnswer
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override bool RequiresUniqueEmail
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override bool ChangePassword(string username, string oldPassword, string newPassword)
+        #region not implemented
+        public override MembershipUser GetUser(string email, bool userIsOnline)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
+        public override MembershipUser CreateUser(string username, string password, string email,
+            string passwordQuestion,
+            string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
             throw new NotImplementedException();
         }
 
-      
-
-        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool DeleteUser(string username, bool deleteAllRelatedData)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int GetNumberOfUsersOnline()
+        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
+            string newPasswordAnswer)
         {
             throw new NotImplementedException();
         }
@@ -203,7 +86,22 @@ namespace WebUI.Infrastructure.Providers
             throw new NotImplementedException();
         }
 
-        public override MembershipUser GetUser(string username, bool userIsOnline)
+        public override bool ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ResetPassword(string username, string answer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateUser(MembershipUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UnlockUser(string userName)
         {
             throw new NotImplementedException();
         }
@@ -218,21 +116,83 @@ namespace WebUI.Infrastructure.Providers
             throw new NotImplementedException();
         }
 
-        public override string ResetPassword(string username, string answer)
+        public override bool DeleteUser(string username, bool deleteAllRelatedData)
         {
             throw new NotImplementedException();
         }
 
-        public override bool UnlockUser(string userName)
+        public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotImplementedException();
         }
 
-        public override void UpdateUser(MembershipUser user)
+        public override int GetNumberOfUsersOnline()
         {
             throw new NotImplementedException();
         }
 
-       
+        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool EnablePasswordRetrieval
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override bool EnablePasswordReset
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override bool RequiresQuestionAndAnswer
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override string ApplicationName { get; set; }
+
+        public override int MaxInvalidPasswordAttempts
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override int PasswordAttemptWindow
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override bool RequiresUniqueEmail
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override MembershipPasswordFormat PasswordFormat
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override int MinRequiredPasswordLength
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override int MinRequiredNonAlphanumericCharacters
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override string PasswordStrengthRegularExpression
+        {
+            get { throw new NotImplementedException(); }
+        }
+        #endregion
+
     }
 }

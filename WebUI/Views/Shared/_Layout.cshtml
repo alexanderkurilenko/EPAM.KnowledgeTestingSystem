@@ -8,7 +8,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
-<body>
+<body style="padding-bottom: 0">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -16,25 +16,49 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("KCS", "Home", "Test", new { area = "" }, new { @class = "navbar-brand", title = "Knowledge Control System" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @if (Context.User.IsInRole("User"))
+                    {
+                        <li>@Html.ActionLink("Create test", "CreateTest", "Test")</li>
+                    }
+                    @if (Context.User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Edit Users", "UsersEditor", "Admin")</li>
+                    }
+                    @if (User.IsInRole("Moderator"))
+                    {
+                        <li>@Html.ActionLink("Moderator room", "TestsEditor", "Moderator")</li>
+                    }
+                    <li>@Html.ActionLink("Statistics", "Statistics", "Test")</li>
+                    <li>@Html.ActionLink("About", "About", "Test")</li>
+                    <li>@Html.ActionLink("Profile", "Infromation", "Profile")</li>
+                    <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
+                    <li>@Html.ActionLink("Log Out ", "LogOff", "Account")</li>
                 </ul>
+               
+                @Html.Partial("_LoginPartial", new { @class = "nav navbar-nav navbar-right" })
             </div>
         </div>
     </div>
-
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    </div>
+    <footer class="modal-footer">
+        <div class="container">
+            <ul class="nav nav-pills nav-justified">
+                <li><a class="text-muted" href="http://www.w3schools.com/bootstrap/">© @DateTime.Now.Year Knowledge control system.</a></li>
+                <li><a class="text-muted" href="http://www.w3schools.com/bootstrap/">Learn more</a></li>
+                <li><a class="text-muted" href="http://www.w3schools.com/bootstrap/">By Artyom Kozlov</a></li>
+            </ul>
+        </div>
+    </footer>
+    @RenderSection("scripts", required: false)
 </body>
+
 </html>

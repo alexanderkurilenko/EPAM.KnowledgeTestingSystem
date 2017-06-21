@@ -1,0 +1,62 @@
+﻿
+@model WebUI.ViewModels.UserEditorViewModel
+@{
+    ViewBag.Title = "Admin room";
+}
+
+<div id="results">
+    <h1>Admin room</h1>
+
+    <table class="table" id="deletedUser">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.GetEnumerator().Current.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.GetEnumerator().Current.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.GetEnumerator().Current.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.GetEnumerator().Current.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.GetEnumerator().Current.Roles)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @foreach (var elem in item.Roles)
+                    {
+                        @Html.DisplayFor(modelItem => elem.Name)
+                        <br />
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditUser", new { email = item.Email }) |
+                    @Ajax.ActionLink("Delete", "DeleteUser", new { id = item.Id, name = Model.PageInfo.SearchItem, page = Model.PageInfo.PageNumber },
+                        new AjaxOptions { Confirm = "Do you want delete '" + item.Name + "'?", UpdateTargetId = "results" }, new { @class = "text-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+    
+</div>

@@ -54,7 +54,9 @@ namespace DAL.Repositories
 
         public void Update(Answer item)
         {
-            db.Entry(item).State = EntityState.Modified;
+            var entity = db.Set<Answer>().Find(item.Id);
+            entity.Value =item.Value;
+            db.Entry(entity).State = EntityState.Modified;
         }
     }
 }
