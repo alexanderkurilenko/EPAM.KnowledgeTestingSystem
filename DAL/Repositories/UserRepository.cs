@@ -8,78 +8,91 @@ using DAL.ORM;
 using System.Data.Entity;
 using Ninject;
 using DAL.Configurations;
+using System.Data.Entity.Migrations;
+using DAL.DTO;
+using DAL.Mapper;
 
 namespace DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private DbContext db;
+        private readonly DbContext _context;
 
-        public UserRepository(DbContext context)
+        public UserRepository(DbContext uow)
         {
-            db = context;
+            _context = uow;
         }
 
-        public void Create(User item)
+
+        public DalUser GetByEmail(string email)
         {
-            if (item == null)
-            {
-                throw new NullReferenceException();
-            }
-            db.Set<User>().Add(item);
+            var ormUser = _context.Set<User>().FirstOrDefault(test => test.Email == email);
+            if (ormUser != null)
+                return ormUser.ToDal();
+            return null;
         }
 
-        public void Delete(User item)
+
+        public DalUser GetByLogin(string login)
         {
-            db.Set<User>().Remove(item);
+            var ormUser = _context.Set<User>().FirstOrDefault(test => test.Login == login);
+            if (ormUser != null)
+                return ormUser.ToDal();
+            return null;
+        }
+
+        public IEnumerable<DalUser> GetAll()
+        {
+            return _context.Set<User>().ToList().Select(u => u.ToDal());
+
+        }
+
+        public DalUser GetById(int id)
+        {
+            var ormUser = _context.Set<User>().FirstOrDefault(test => test.Id == id);
+            if (ormUser != null)
+                return ormUser.ToDal();
+            return null;
+        }
+
+        public void Create(DalUser item)
+        {
+            var user = item.ToEntity();
+            _context.Set<User>().Add(user);
+        }
+
+        public void Update(DalUser item)
+        {
+            var user = item.ToEntity();
+
+            _context.Set<User>().AddOrUpdate(user);
         }
 
         public void Delete(int id)
         {
-            User user = db.Set<User>().Find(id);
-            if (user != null)
-            {
-                db.Set<User>().Remove(user);
-            }
-        }
+            var user = _context.Set<User>().Single(u => u.Id == id);
+            _context.Set<User>().Remove(user);
 
-        public IEnumerable<User> Find(Func<User, bool> predicate)
-        {
-           return  db.Set<User>().Where(predicate).ToList();
-        }
-
-        public User Get(int id)
-        {
-            return db.Set<User>().Find(id);
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            return db.Set<User>().ToList();
-        }
-
-        public User GetByEmail(string email)
-        {
-            return db.Set<User>().FirstOrDefault(user => user.Email == email);
-        }
-
-        public User GetByLogin(string login)
-        {
-           return  db.Set<User>().FirstOrDefault(user => user.Name == login);
-        }
-
-        public void Update(User item)
-        {
-            db.Entry(item).State = EntityState.Modified;
         }
 
         public void UpdatePassword(User user)
         {
-           var selectedUser= db.Set<User>().FirstOrDefault(tmp => tmp.Id == user.Id);
-            if (selectedUser != null)
-            {
-                selectedUser.Password = user.Password;
-            }
+            throw new NotImplementedException();
+        }
+
+        public DalUser Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<DalUser> Find(Func<DalUser, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(DalUser item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

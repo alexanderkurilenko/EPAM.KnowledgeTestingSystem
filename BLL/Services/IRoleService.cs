@@ -1,4 +1,5 @@
-﻿using BLL.DTO;
+﻿
+using BLL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,10 @@ namespace BLL.Services
 {
     public interface IRoleService
     {
-        RoleDTO GetRoleByName(string name);
-        IEnumerable<RoleDTO> GetAllRoles();
-        RoleDTO GetRole(int id);
-        void CreateRole(RoleDTO role);
-        void DeleteRole(RoleDTO role);
-        void UpdateRole(RoleDTO role);
+        RoleEntity GetRoleEntity(int id);
+        IEnumerable<RoleEntity> GetAllRoleEntities();
+        void CreateRole(RoleEntity role);
+        void DeleteRole(RoleEntity role);
+        RoleEntity GetRoleByName(string id);
     }
 }

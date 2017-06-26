@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,18 @@ namespace WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
-        public ActionResult Index()
+        private 
+            IRoleService service;
+
+        public HomeController(IRoleService serv)
         {
-            return Redirect(Url.Action("Login", "Account"));
+            service = serv;
+        }
+        // GET: Home
+        public string Index()
+        {
+            //service.CreateUser(new BLL.Entities.UserEntity() { Email = "fdlkf@mail.ru", Name = "alex", Login = "lalaa" });
+            return service.GetRoleByName("User").Id.ToString();
         }
     }
 }

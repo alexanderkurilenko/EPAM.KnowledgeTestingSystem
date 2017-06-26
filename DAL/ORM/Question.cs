@@ -8,11 +8,18 @@ namespace DAL.ORM
 {
     public class Question
     {
+        public Question()
+        {
+            Answers = new List<Answer>();
+        }
 
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
+        public string Description { get; set; }
 
-        public virtual string Value { get; set; }
-        public virtual Test Test { get; set; }
+        public int TestId { get; set; }
+        public Test Test { get; set; }
+
+        public virtual ICollection<Answer> Answers { get; set; }
 
     }
 }

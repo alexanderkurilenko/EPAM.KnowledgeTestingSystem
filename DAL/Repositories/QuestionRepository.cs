@@ -6,58 +6,45 @@ using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.ORM;
 using System.Data.Entity;
+using DAL.DTO;
 
 namespace DAL.Repositories
 {
     public class QuestionRepository : IQuestionRepository
     {
-        private DbContext db;
-
-        public QuestionRepository(DbContext context)
+        public void Create(DalQuestion item)
         {
-            db = context;
+            throw new NotImplementedException();
         }
 
-        public void Create(Question item)
+        public void Delete(DalQuestion item)
         {
-            db.Set<Question>().Add(item);
-        }
-
-        public void Delete(Question item)
-        {
-            db.Set<Question>().Remove(item);
+            throw new NotImplementedException();
         }
 
         public void Delete(int id)
         {
-            Question question = db.Set<Question>().Find(id);
-            if (question != null)
-            {
-                db.Set<Question>().Remove(question);
-            }
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Question> Find(Func<Question, bool> predicate)
+        public IEnumerable<DalQuestion> Find(Func<DalQuestion, bool> predicate)
         {
-            return db.Set<Question>().Where(predicate).ToList();
+            throw new NotImplementedException();
         }
 
-        public Question Get(int id)
+        public DalQuestion Get(int id)
         {
-            return db.Set<Question>().Find(id);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Question> GetAll()
+        public IEnumerable<DalQuestion> GetAll()
         {
-            return db.Set<Question>().ToList();
+            throw new NotImplementedException();
         }
 
-        public void Update(Question item)
+        public void Update(DalQuestion item)
         {
-            var entity = db.Set<Question>().Find(item.Id);
-            entity.Value = item.Value;
-            db.Entry(entity).State = EntityState.Modified;
+            throw new NotImplementedException();
         }
-
     }
 }

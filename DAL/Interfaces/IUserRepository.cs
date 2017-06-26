@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.ORM;
+using DAL.DTO;
 
 namespace DAL.Interfaces
 {
-    public interface IUserRepository:IRepository<User>
+    public interface IUserRepository:IRepository<DalUser>
     {
-        User GetByEmail(string email);
+        DalUser GetByEmail(string email);
 
-        User GetByLogin(string login);
+        DalUser GetByLogin(string login);
 
         void UpdatePassword(User user);
     }

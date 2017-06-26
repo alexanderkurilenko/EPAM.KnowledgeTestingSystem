@@ -3,49 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BLL.DTO;
 using DAL.Interfaces;
 using BLL.Mapper;
+using BLL.Entities;
 
 namespace BLL.Services.Implementation
 {
     public class RoleService : IRoleService
     {
-        private readonly IUnitOfWork _uow;
+        private readonly IUnitOfWork uow;
 
         public RoleService(IUnitOfWork uow)
         {
-            _uow = uow;
+            this.uow = uow;
+        }
+        public RoleEntity GetRoleEntity(int id)
+        {
+            return uow.Roles.Get(id).ToBll();
         }
 
-        public RoleDTO GetRole(int id)
+        public IEnumerable<RoleEntity> GetAllRoleEntities()
         {
-            return _uow.Roles.Get(id).ToRoleDto();
+            return uow.Roles.GetAll().Select(r => r.ToBll());
         }
 
-        public IEnumerable<RoleDTO> GetAllRoles()
+        public void CreateRole(RoleEntity role)
         {
-            return _uow.Roles.GetAll().Select(role => role.ToRoleDto());
+            throw new NotImplementedException();
         }
 
-        public void CreateRole(RoleDTO role)
+        public void DeleteRole(RoleEntity role)
         {
-            _uow.Roles.Create(role.ToRoleEntity());
+            throw new NotImplementedException();
         }
 
-        public void DeleteRole(RoleDTO role)
+        public RoleEntity GetRoleByName(string id)
         {
-            _uow.Roles.Delete(role.ToRoleEntity());
-        }
-
-        public void UpdateRole(RoleDTO role)
-        {
-            _uow.Roles.Update(role.ToRoleEntity());
-        }
-
-        public RoleDTO GetRoleByName(string name)
-        {
-            return _uow.Roles.GetRoleByName(name).ToRoleDto();
+            return uow.Roles.GetRoleByName(id).ToBll();
         }
     }
 }

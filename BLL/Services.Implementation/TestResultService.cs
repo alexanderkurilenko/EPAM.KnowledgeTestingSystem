@@ -1,4 +1,5 @@
-﻿using BLL.DTO;
+﻿
+using BLL.Entities;
 using BLL.Mapper;
 using DAL.Interfaces;
 using System;
@@ -9,47 +10,99 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.Implementation
 {
-    public class TestResultService:ITestResultService
+    public class TestResultService:IResultService
     {
-
         private readonly IUnitOfWork _uow;
 
         public TestResultService(IUnitOfWork uow)
         {
-            _uow = uow;
+            this._uow = uow;
+
         }
 
-        public void CreateTestResult(TestResultDTO test)
+        public void CreateTestResult(ResultEntity test)
         {
-            _uow.Results.Create(test.ToTestResultEntity());
+            _uow.Results.Create(test.ToDal());
             _uow.Save();
         }
 
-        public void DeleteTestResult(int id)
+        public void DeleteTestResult(ResultEntity test)
         {
-            _uow.Results.Delete(id);
+            _uow.Results.Delete(test.Id);
             _uow.Save();
         }
 
-        public void DeleteTestResult(TestResultDTO test)
+        public IEnumerable<ResultEntity> GetAllResults()
         {
-            _uow.Results.Delete(test.ToTestResultEntity());
-            _uow.Save();
+            return _uow.Results.GetAll().Select(r => r.ToBll());
         }
 
-        public IEnumerable<TestResultDTO> GetAllTestResults()
+        public ResultEntity GetResultById(int id)
         {
-            return _uow.Results.GetAll().Select(test => test.ToTestResultDto());
-            
+            return _uow.Results.Get(id).ToBll();
         }
 
-        public TestResultDTO GetTestResult(int id)
+        public TimeSpan FindAverageTime(IEnumerable<ResultEntity> results)
         {
-            var testResult = _uow.Results.Get(id);
-            if (ReferenceEquals(testResult, null))
-                return null;
-            return testResult.ToTestResultDto();
-          
+            double allTime = 0;
+            foreach (var result in results)
+            {
+                allTime += result.PassingTime.TotalMinutes;
+            }
+            return TimeSpan.FromMinutes(allTime / results.Count());
         }
+
+        public double FindAverageProcent(IEnumerable<ResultEntity> results)
+        {
+            double allProcent = 0;
+            foreach (var result in results)
+            {
+                allProcent += result.PassingProcent;
+            }
+            return allProcent / results.Count();
+        }
+
+        public ResultEntity CheckTest(TestEntity currentTest)
+        {
+            var result = new ResultEntity();
+            result.TestId = currentTest.Id;
+            result.CorrectAnswerCount = CountOfCorrectAnswer(currentTest);
+            result.PassingProcent = CalculatePassingProcent(result.CorrectAnswerCount,
+    currentTest.Questions.Count);
+            result.IsPassed = IsPassed(currentTest);
+
+            return result;
+        }
+        #region Private Method
+        private double CalculatePassingProcent(double correctCount, double countOfQuestion)
+        {
+            return ((double)correctCount / (double)countOfQuestion) * 100;
+        }
+
+        private bool IsPassed(TestEntity test)
+        {
+            int correctCount = CountOfCorrectAnswer(test);
+            int countOfQuestion = test.Questions.Count;
+            if (test.MinProcentToPassTest >= CalculatePassingProcent(correctCount, countOfQuestion))
+                return false;
+            else
+                return true;
+        }
+
+        private int CountOfCorrectAnswer(TestEntity currentTest)
+        {
+            int correctAnswer = 0;
+            var questions = _uow.Test.Get(currentTest.Id).Questions.ToList();
+            foreach (var q in questions)
+            {
+                foreach (var a in q.Answers)
+                {
+                    if (currentTest.Questions.FirstOrDefault(m => q.Id == m.Id).SelectedAnswer == a.Id && a.IsCorrect)
+                        correctAnswer++;
+                }
+            }
+            return correctAnswer;
+        }
+        #endregion
     }
 }

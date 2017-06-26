@@ -6,57 +6,45 @@ using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.ORM;
 using System.Data.Entity;
+using DAL.DTO;
 
 namespace DAL.Repositories
 {
     public class AnswerRepository : IAnswerRepository
     {
-        private DbContext db;
-
-        public AnswerRepository(DbContext context)
+        public void Create(DalAnswer item)
         {
-            db = context;
+            throw new NotImplementedException();
         }
 
-        public void Create(Answer item)
+        public void Delete(DalAnswer item)
         {
-            db.Set<Answer>().Add(item);
-        }
-
-        public void Delete(Answer item)
-        {
-            db.Set<Answer>().Remove(item);
+            throw new NotImplementedException();
         }
 
         public void Delete(int id)
         {
-            Answer answer = db.Set<Answer>().Find(id);
-            if (answer != null)
-            {
-                db.Set<Answer>().Remove(answer);
-            }
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Answer> Find(Func<Answer, bool> predicate)
+        public IEnumerable<DalAnswer> Find(Func<DalAnswer, bool> predicate)
         {
-            return db.Set<Answer>().Where(predicate).ToList();
+            throw new NotImplementedException();
         }
 
-        public Answer Get(int id)
+        public DalAnswer Get(int id)
         {
-            return db.Set<Answer>().Find(id);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Answer> GetAll()
+        public IEnumerable<DalAnswer> GetAll()
         {
-            return db.Set<Answer>().ToList();
+            throw new NotImplementedException();
         }
 
-        public void Update(Answer item)
+        public void Update(DalAnswer item)
         {
-            var entity = db.Set<Answer>().Find(item.Id);
-            entity.Value =item.Value;
-            db.Entry(entity).State = EntityState.Modified;
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,9 +8,13 @@ namespace DAL.ORM
 {
     public class Answer
     {
-        public virtual int Id { get; set; }
-        public virtual string Value { get; set; }
-        public virtual Test Test { get; set; }
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public bool IsCorrect { get; set; }
+
+        public int QuestionId { get; set; }
+
+        public virtual Question Questions { get; set; }
 
     }
 }

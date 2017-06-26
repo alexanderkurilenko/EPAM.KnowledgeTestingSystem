@@ -12,8 +12,8 @@ namespace DAL.Interfaces
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }
         IResultRepository Results { get; }
-        IQuestionRepository Questions { get; }
-        IAnswerRepository Answers { get; }
+        //IQuestionRepository Questions { get; }
+       // IAnswerRepository Answers { get; }
         ITestRepository Test { get; }
 
         void Save();

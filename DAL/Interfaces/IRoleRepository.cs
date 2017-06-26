@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.ORM;
+using DAL.DTO;
 
 namespace DAL.Interfaces
 {
-    public interface IRoleRepository:IRepository<Role>
+    public interface IRoleRepository:IRepository<DalRole>
     {
-        Role GetRoleByName(string name);
+        DalRole GetRoleByName(string name);
     }
 }

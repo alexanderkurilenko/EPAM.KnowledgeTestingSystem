@@ -9,9 +9,8 @@ namespace WebUI.ViewModels
     public class LogOnViewModel
     {
         [Required(ErrorMessage = "The field can not be empty!")]
-        [Display(Name = "Enter your e-mail")]
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Uncurrect email")]
-        public string Email { get; set; }
+        [Display(Name = "User's login")]
+        public string Login { get; set; }
 
         [Required(ErrorMessage = "The field can not be empty!")]
         [DataType(DataType.Password)]

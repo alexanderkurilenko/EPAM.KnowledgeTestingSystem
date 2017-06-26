@@ -20,35 +20,17 @@ namespace DAL.Repositories
         private TestRepository testRepository;
         private UserRepository userRepository;
 
-        private EpamKnowledgeSystemDbContext db;
+        private KnowledgeSystemDbContext db;
 
         public UnitOfWork(string connection)
         {
-            db = new EpamKnowledgeSystemDbContext(connection);
+            db = new KnowledgeSystemDbContext(connection);
             //IKernel ninjectKernel = new StandardKernel(new DalDependency(connection));
             //db = ninjectKernel.Get<KnowledgeSystemDbContext>();
         }
 
-        public IAnswerRepository Answers
-        {
-            get
-            {
-                if (answerRepository == null)
-                    answerRepository = new AnswerRepository(db);
-                return answerRepository;
-            }
-        }
-
-        
-        public IQuestionRepository Questions
-        {
-            get
-            {
-                if (questionRepository == null)
-                    questionRepository = new QuestionRepository(db);
-                return questionRepository;
-            }
-        }
+   
+       
 
 
         public IResultRepository Results

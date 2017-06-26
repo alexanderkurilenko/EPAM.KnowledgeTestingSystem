@@ -6,55 +6,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
+using DAL.DTO;
+using DAL.Mapper;
 
 namespace DAL.Repositories
 {
     public class TestResultRepository:IResultRepository
     {
-        private DbContext db;
+        private readonly DbContext _context;
 
         public TestResultRepository(DbContext context)
         {
-            db = context;
+            _context = context;
         }
-
-        public void Create(TestResult item)
+        public void Create(DalResult item)
         {
-            db.Set<TestResult>().Add(item);
-        }
-
-        public void Delete(TestResult item)
-        {
-            db.Set<TestResult>().Remove(item);
+            var result = item.ToEntity();
+            _context.Set<TestResult>().Add(result);
         }
 
         public void Delete(int id)
         {
-            TestResult testResult = db.Set<TestResult>().Find(id);
-            if (testResult != null)
-            {
-                db.Set<TestResult>().Remove(testResult);
-            }
+            var item = _context.Set<DalResult>().Single(test => id == test.Id);
+            _context.Set<DalResult>().Remove(item);
         }
 
-        public IEnumerable<TestResult> Find(Func<TestResult, bool> predicate)
+        public void Dispose()
         {
-            return db.Set<TestResult>().Where(predicate).ToList();
+            throw new NotImplementedException();
         }
 
-        public TestResult Get(int id)
+        public IEnumerable<DalResult> GetAll()
         {
-            return db.Set<TestResult>().Find(id);
+            return _context.Set<TestResult>().ToList().Select(r => r.ToDal());
         }
 
-        public IEnumerable<TestResult> GetAll()
+        public DalResult Get(int id)
         {
-            return db.Set<TestResult>().ToList();
+            return _context.Set<TestResult>().FirstOrDefault(r => r.Id == id).ToDal();
         }
 
-        public void Update(TestResult item)
+        public void Update(DalResult item)
         {
-            db.Entry(item).State = EntityState.Modified;
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<DalResult> Find(Func<DalResult, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(DalResult item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

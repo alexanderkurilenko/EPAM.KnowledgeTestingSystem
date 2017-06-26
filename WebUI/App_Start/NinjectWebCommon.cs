@@ -41,7 +41,7 @@ namespace WebUI.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var modules = new INinjectModule[] { new BLLNinjectModule("name = DefaultConnection") };
+            var modules = new INinjectModule[] { new BLLNinjectModule("name = EPAMKTS") };
             var kernel = new StandardKernel(modules);
             try
             {

@@ -1,4 +1,5 @@
-﻿using BLL.DTO;
+﻿
+using BLL.Entities;
 using BLL.Services;
 using System;
 using System.Collections.Generic;
@@ -11,59 +12,62 @@ namespace WebUI.Infrastructure.Providers
 {
     public class CustomMembershipProvider : MembershipProvider
     {
-        public readonly IUserService _userService;
-        private readonly IRoleService _roleService;
-
-        public CustomMembershipProvider()
+        public IUserService UserService
         {
-
+            get { return (IUserService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService)); }
         }
 
-        public CustomMembershipProvider(IUserService userService, IRoleService roleService)
+        public IRoleService RoleService
         {
-            _userService = userService;
-            _roleService = roleService;
+            get { return (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService)); }
         }
 
-        public bool CreateUser(string name, string email, string password, int age)
+        public MembershipUser CreateUser(string login, string password, string email, string name)
         {
-
-            UserDTO userDTO = new UserDTO
+            var user = new UserEntity
             {
-                Name = name,
                 Email = email,
-                Password = Crypto.HashPassword(password),
-                Age = age,
-                TestResults = new List<TestResultDTO>()
+                Login = login,
+                RoleId = RoleService.GetRoleByName("User").Id,
+                Name = name,
+                Password = password
             };
-
-            RoleDTO adminRole = _roleService.GetRole(2);
-            RoleDTO moderatorRole = _roleService.GetRole(1);
-            RoleDTO userRole = _roleService.GetRole(3);
-            if (userRole != null)
-            {
-                //userDTO.Roles.Add(adminRole);
-                 //userDTO.Roles.Add(moderatorRole);
-               userDTO.Roles.Add(userRole);
-            }
-
-            _userService.CreateUser(userDTO);
-            return true;
+            UserService.CreateUser(user);
+            var membershipUser = GetUser(email, false);
+            return membershipUser;
         }
 
-        public override bool ValidateUser(string email, string password)
+        public override bool ValidateUser(string login, string password)
         {
-            UserDTO user = _userService.GetUserByEmail(email);
+            var user = UserService.GetUserByLogin(login);
 
             if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
+            //Определяет, соответствуют ли заданный хэш RFC 2898 и пароль друг другу
             {
                 return true;
             }
             return false;
         }
 
-        #region not implemented
         public override MembershipUser GetUser(string email, bool userIsOnline)
+        {
+            var user = UserService.GetUserByEmail(email);
+
+            if (user == null) return null;
+
+            var memberUser = new MembershipUser("CustomMembershipProvider", user.Email,
+                null, null, null, null,
+                false, false, DateTime.Now,
+                DateTime.MinValue, DateTime.MinValue,
+                DateTime.MinValue, DateTime.MinValue);
+
+            return memberUser;
+        }
+
+        #region Stabs
+
+        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
+            string newPasswordAnswer)
         {
             throw new NotImplementedException();
         }
@@ -75,11 +79,6 @@ namespace WebUI.Infrastructure.Providers
             throw new NotImplementedException();
         }
 
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
-            string newPasswordAnswer)
-        {
-            throw new NotImplementedException();
-        }
 
         public override string GetPassword(string username, string answer)
         {
@@ -195,4 +194,5 @@ namespace WebUI.Infrastructure.Providers
         #endregion
 
     }
+
 }

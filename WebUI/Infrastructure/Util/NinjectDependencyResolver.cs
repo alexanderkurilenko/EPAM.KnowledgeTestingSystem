@@ -35,9 +35,7 @@ namespace WebUI.Util
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
             kernel.Bind<IRoleService>().To<RoleService>().InRequestScope();
             kernel.Bind<ITestService>().To<TestService>().InRequestScope();
-            kernel.Bind<ITestResultService>().To<TestResultService>().InRequestScope();
-            kernel.Bind<IAnswerService>().To<AnswerService>().InRequestScope();
-            kernel.Bind<IQuestionService>().To<QuestionService>().InRequestScope();
+            kernel.Bind<IResultService>().To<TestResultService>().InRequestScope();
           
         }
     }

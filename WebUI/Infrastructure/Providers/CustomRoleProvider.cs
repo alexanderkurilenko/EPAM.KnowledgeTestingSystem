@@ -1,4 +1,5 @@
-﻿using BLL.DTO;
+﻿
+using BLL.Entities;
 using BLL.Services;
 using BLL.Services.Implementation;
 using System;
@@ -16,42 +17,35 @@ namespace WebUI.Infrastructure.Providers
         private readonly IUserService _userService = System.Web.Mvc.DependencyResolver.Current.GetService<UserService>();
         private readonly IRoleService _roleService = System.Web.Mvc.DependencyResolver.Current.GetService<RoleService>();
 
+        public override string ApplicationName { get; set; }
+
         public override bool IsUserInRole(string email, string roleName)
         {
-
-            UserDTO user = _userService.GetAllUsers().FirstOrDefault(u => u.Email == email);
-
-            if (user == null) return false;
-
-            RoleDTO userRole = _roleService.GetRoleByName(roleName);
-
-            if (userRole != null && user.Roles.Contains(userRole))
-            {
+            var role = _roleService.GetRoleEntity(_userService.GetUserByEmail(email).RoleId);
+            if (role.Name == roleName)
                 return true;
-            }
-
             return false;
         }
 
-        public override string[] GetRolesForUser(string email)
+        public override string[] GetRolesForUser(string name)
         {
-            List<string> roles = new List<string>();
-            var user = _userService.GetAllUsers().FirstOrDefault(u => u.Email == email);
+            var roles = new string[] { };
+            var users = _userService.GetAllUserEntities();
+            var user = users.FirstOrDefault(u => u.Login == name);
 
-            if (user == null) return null;
+            if (user == null) return roles;
 
-            foreach (var role in user.Roles)
-            {
-                roles.Add(role.Name);
-            }
-            return roles.ToArray();
+            var role = _roleService.GetRoleEntity(user.RoleId);
+            return new[] { role.Name };
+        }
+
+        public override void CreateRole(string roleName)
+        {
+            var newRole = new RoleEntity { Name = roleName };
+            _roleService.CreateRole(newRole);
         }
 
         #region not implemented
-        public override void CreateRole(string roleName)
-        {
-            throw new NotImplementedException();
-        }
 
         public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
         {
@@ -87,8 +81,6 @@ namespace WebUI.Infrastructure.Providers
         {
             throw new NotImplementedException();
         }
-
-        public override string ApplicationName { get; set; }
         #endregion
     }
 }

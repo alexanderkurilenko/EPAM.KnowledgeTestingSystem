@@ -4,305 +4,212 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.ORM;
-using BLL.DTO;
+using BLL.Entities;
+using DAL.DTO;
 
 namespace BLL.Mapper
 {
     public static class CustomBLLMapper
     {
-        #region user mapping
-        /// <summary>
-        /// The method converts an object of type User to an object of type UserDTO.
-        /// </summary>
-        /// <param name="userEntity">An object of type User.</param>
-        /// <returns>An object of type UserDTO.</returns>
-        public static UserDTO ToUserDto(this User userEntity)
+        #region Test
+        public static TestEntity ToBll(this DalTest test)
         {
-            if (ReferenceEquals(userEntity, null))
-                return null;
-            return new UserDTO()
+            var testEntity = new TestEntity()
             {
-                Id = userEntity.Id,
-                Name = userEntity.Name,
-                Email = userEntity.Email,
-                Password = userEntity.Password,
-                Age = userEntity.Age,
-                Roles = userEntity.Roles.ToRoleDTOCollection().ToList(),
-                TestResults = userEntity.TestResults.ToTestResultDTOCollection().ToList()
+
+                Id = test.Id,
+                Creator = test.Creator,
+                Description = test.Description,
+                Name = test.Name,
+                MinProcentToPassTest = test.MinProcentToPassTest,
+                Time = test.Time,
             };
+            foreach (var q in test.Questions)
+            {
+                testEntity.Questions.Add(q.ToBll());
+            }
+            return testEntity;
         }
 
-        /// <summary>
-        /// The method converts an object of type UserDTO to an object of type User.
-        /// </summary>
-        /// <param name="userDto">An object of type UserDTO.</param>
-        /// <returns>An object of type User.</returns>
-        public static User ToUserEntity(this UserDTO userDto)
+        public static DalTest ToDal(this TestEntity test)
         {
-            return new User()
+            var dalTest = new DalTest()
             {
-                Id = userDto.Id,
-                Name = userDto.Name,
-                Email = userDto.Email,
-                Password = userDto.Password,
-                Age = userDto.Age,
-                Roles = userDto.Roles.ToRoleCollection().ToList(),
-                TestResults = userDto.TestResults.ToTestResultCollection().ToList()
 
+                Id = test.Id,
+                Creator = test.Creator,
+                Description = test.Description,
+                Name = test.Name,
+                MinProcentToPassTest = test.MinProcentToPassTest,
+                Time = test.Time
             };
-        }
-        #endregion
-        #region role mapping
-        /// <summary>
-        /// The method converts an object of type Role to an object of type RoleDTO.
-        /// </summary>
-        /// <param name="roleEntity">An object of type Role.</param>
-        /// <returns>An object of type RoleDTO.</returns>
-        public static RoleDTO ToRoleDto(this Role roleEntity)
-        {
-            return new RoleDTO()
+            foreach (var q in test.Questions)
             {
-                Id = roleEntity.Id,
-                Name = roleEntity.Name,
-                Description = roleEntity.Description
-
-            };
-        }
-
-        /// <summary>
-        /// The method converts an object of type RoleDTO to an object of type Role.
-        /// </summary>
-        /// <param name="roleDto">An object of type RoleDTO.</param>
-        /// <returns>An object of type Role.</returns>
-        public static Role ToRoleEntity(this RoleDTO roleDto)
-        {
-            return new Role()
-            {
-                Id = roleDto.Id,
-                Name = roleDto.Name,
-                Description = roleDto.Description
-            };
+                dalTest.Questions.Add(q.ToDal());
+            }
+            return dalTest;
         }
 
 
         #endregion
-        #region test mapping
-        /// <summary>
-        /// The method converts an object of type Test to an object of type TestDTO.
-        /// </summary>
-        /// <param name="testEntity">An object of type Test.</param>
-        /// <returns>An object of type TestDTO.</returns>
-        public static TestDTO ToTestDto(this Test testEntity)
+
+        #region Questuion
+
+        public static DalQuestion ToDal(this QuestionEntity question)
         {
-            if (ReferenceEquals(testEntity, null))
-                return null;
-            return new TestDTO()
+            var dalQuastion = new DalQuestion()
             {
-                Id = testEntity.Id,
-                Name = testEntity.Name,
-                GoodAnswers = testEntity.GoodAnswers,
-                BadAnswers = testEntity.BadAnswers,
-                Time = testEntity.Time,
-                Description = testEntity.Description,
-                IsValid = testEntity.IsValid,
-                Creator = testEntity.Creator,
-                Answers = testEntity.Answers.ToAnswerDtoCollection().ToList(),
-                Questions = testEntity.Questions.ToQuestionDtoCollection().ToList()
+                Id = question.Id,
+                Description = question.Description,
+                TestId = question.TestId,
             };
+            foreach (var q in question.Answers)
+            {
+                dalQuastion.Answers.Add(q.ToDal());
+            }
+            return dalQuastion;
         }
 
-        /// <summary>
-        /// The method converts an object of type TestDTO to an object of type Test.
-        /// </summary>
-        /// <param name="testDto">An object of type TestDTO.</param>
-        /// <returns>An object of type Test.</returns>
-        public static Test ToTestEntity(this TestDTO testDto)
+        public static QuestionEntity ToBll(this DalQuestion question)
         {
-            return new Test()
+            var questionEntity = new QuestionEntity()
             {
-                Id = testDto.Id,
-                Name = testDto.Name,
-                GoodAnswers = testDto.GoodAnswers,
-                BadAnswers = testDto.BadAnswers,
-                Time = testDto.Time,
-                Description = testDto.Description,
-                IsValid = testDto.IsValid,
-                Creator = testDto.Creator,
-                Answers = testDto.Answers.ToAnswerCollection().ToList(),
-                Questions = testDto.Questions.ToQuestionCollection().ToList()
+                Id = question.Id,
+                Description = question.Description,
+                TestId = question.TestId,
 
             };
+            foreach (var q in question.Answers)
+            {
+                questionEntity.Answers.Add(q.ToBll());
+            }
+            return questionEntity;
         }
 
         #endregion
-        #region answer mapping
-        /// <summary>
-        /// The method converts an object of type Answer to an object of type AnswerDTO.
-        /// </summary>
-        /// <param name="answerEntity">An object of type Answer.</param>
-        /// <returns>An object of type AnswerDTO.</returns>
-        public static AnswerDTO ToAnswerDto(this Answer answerEntity)
+
+        #region Answer
+
+        public static DalAnswer ToDal(this AnswerEntity answer)
         {
-            if (ReferenceEquals(answerEntity, null))
-                return null;
-            return new AnswerDTO()
+            var dalAnswer = new DalAnswer()
             {
-                Id = answerEntity.Id,
-                Value = answerEntity.Value
+                Id = answer.Id,
+                Description = answer.Description,
+                IsCorrect = answer.IsCorrect,
+                QuestionId = answer.QuestionId,
             };
+            return dalAnswer;
         }
 
-        /// <summary>
-        /// The method converts an object of type AnswerDTO to an object of type Answer.
-        /// </summary>
-        /// <param name="answerDto">An object of type AnswerDTO.</param>
-        /// <returns>An object of type Answer.</returns>
-        public static Answer ToAnswerEntity(this AnswerDTO answerDto)
+        public static AnswerEntity ToBll(this DalAnswer answer)
         {
-            return new Answer()
+            var answerEntity = new AnswerEntity()
             {
-                Id = answerDto.Id,
-                Value = answerDto.Value
-
+                Id = answer.Id,
+                Description = answer.Description,
+                IsCorrect = answer.IsCorrect,
+                QuestionId = answer.QuestionId,
             };
+            return answerEntity;
         }
 
         #endregion
-        #region question mapping
-        /// <summary>
-        /// The method converts an object of type Question to an object of type QuestionDTO.
-        /// </summary>
-        /// <param name="questionEntity">An object of type Question.</param>
-        /// <returns>An object of type QuestionDTO.</returns>
-        public static QuestionDTO ToQuestionDto(this Question questionEntity)
-        {
-            if (ReferenceEquals(questionEntity, null))
-                return null;
-            return new QuestionDTO()
-            {
-                Id = questionEntity.Id,
-                Value = questionEntity.Value
 
+        #region Role
+
+        public static DalRole ToDal(this RoleEntity role)
+        {
+            var dalRole = new DalRole()
+            {
+                Id = role.Id,
+                Name = role.Name,
+                Description = role.Description
             };
+            return dalRole;
         }
 
-        /// <summary>
-        /// The method converts an object of type QuestionDTO to an object of type Question.
-        /// </summary>
-        /// <param name="questionDto">An object of type QuestionDTO.</param>
-        /// <returns>An object of type Question.</returns>
-        public static Question ToQuestionEntity(this QuestionDTO questionDto)
+        public static RoleEntity ToBll(this DalRole role)
         {
-            return new Question()
+            var roleEntity = new RoleEntity()
             {
-                Id = questionDto.Id,
-                Value = questionDto.Value
-
+                Id = role.Id,
+                Name = role.Name,
+                Description = role.Description
             };
+            return roleEntity;
         }
+
 
         #endregion
-        #region testResult mapping
-        /// <summary>
-        /// The method converts an object of type TestResult to an object of type TestResultDTO.
-        /// </summary>
-        /// <param name="testResultEntity">An object of type TestResult.</param>
-        /// <returns>An object of type TestResultDTO.</returns>
-        public static TestResultDTO ToTestResultDto(this TestResult testResultEntity)
+
+        #region Result
+        public static DalResult ToDal(this ResultEntity result)
         {
-            if (ReferenceEquals(testResultEntity, null))
-                return null;
-            return new TestResultDTO()
+            var dalResult = new DalResult()
             {
-                Id = testResultEntity.Id,
-                Name = testResultEntity.Name,
-                GoodAnswers = testResultEntity.GoodAnswers,
-                BadAnswers = testResultEntity.BadAnswers,
-                DateCompleted = testResultEntity.DateComplete
+                Id = result.Id,
+                Name = result.Name,
+                CorrectAnswerCount = result.CorrectAnswerCount,
+                IsPassed = result.IsPassed,
+                PassingTime = result.PassingTime,
+                PassingProcent = result.PassingProcent,
+                TestId = result.TestId,
+                UserId = result.UserId
             };
+            return dalResult;
         }
 
-        /// <summary>
-        /// The method converts an object of type TestResultDTO to an object of type TestResult.
-        /// </summary>
-        /// <param name="testResultDto">An object of type TestResultDTO.</param>
-        /// <returns>An object of type TestResult.</returns>
-        public static TestResult ToTestResultEntity(this TestResultDTO testResultDto)
+        public static ResultEntity ToBll(this DalResult result)
         {
-            return new TestResult()
+            var resultEntity = new ResultEntity()
             {
-                Id = testResultDto.Id,
-                Name = testResultDto.Name,
-                GoodAnswers = testResultDto.GoodAnswers,
-                BadAnswers = testResultDto.BadAnswers,
-                DateComplete = testResultDto.DateCompleted,
-                User = testResultDto.User?.ToUserEntity()
-
+                Id = result.Id,
+                Name = result.Name,
+                CorrectAnswerCount = result.CorrectAnswerCount,
+                IsPassed = result.IsPassed,
+                PassingTime = result.PassingTime,
+                PassingProcent = result.PassingProcent,
+                TestId = result.TestId,
+                UserId = result.UserId
             };
+            return resultEntity;
         }
+
+
         #endregion
-        #region private methods
 
-        private static IEnumerable<Role> ToRoleCollection(this IList<RoleDTO> collectionRoleDto)
+        #region User
+        public static DalUser ToDal(this UserEntity user)
         {
-            foreach (var roleDTO in collectionRoleDto)
+            var dalUser = new DalUser()
             {
-                yield return roleDTO.ToRoleEntity();
-            }
-        }
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Login = user.Login,
+                Password = user.Password,
+                RoleId = user.RoleId,
+            };
 
-        private static IEnumerable<RoleDTO> ToRoleDTOCollection(this IList<Role> collectionRole)
-        {
-            foreach (var role in collectionRole)
-            {
-                yield return role.ToRoleDto();
-            }
-        }
-        private static IEnumerable<Answer> ToAnswerCollection(this IList<AnswerDTO> collectionAnswerDto)
-        {
-            foreach (var AnswerDTO in collectionAnswerDto)
-            {
-                yield return AnswerDTO.ToAnswerEntity();
-            }
+            return dalUser;
         }
 
-        private static IEnumerable<AnswerDTO> ToAnswerDtoCollection(this IList<Answer> collectionAnswer)
+        public static UserEntity ToBll(this DalUser user)
         {
-            foreach (var answer in collectionAnswer)
+            var userEntity = new UserEntity()
             {
-                yield return answer.ToAnswerDto();
-            }
-        }
-        private static IEnumerable<Question> ToQuestionCollection(this IList<QuestionDTO> collectionQuestionDto)
-        {
-            foreach (var questionDTO in collectionQuestionDto)
-            {
-                yield return questionDTO.ToQuestionEntity();
-            }
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Login = user.Login,
+                Password = user.Password,
+                RoleId = user.RoleId,
+
+            };
+            return userEntity;
         }
 
-        private static IEnumerable<QuestionDTO> ToQuestionDtoCollection(this IList<Question> collectionQuestion)
-        {
-            foreach (var question in collectionQuestion)
-            {
-                yield return question.ToQuestionDto();
-            }
-        }
-        private static IEnumerable<TestResult> ToTestResultCollection(this IList<TestResultDTO> collectionTestResultDto)
-        {
-            foreach (var testResultDTO in collectionTestResultDto)
-            {
-                yield return testResultDTO.ToTestResultEntity();
-            }
-        }
-
-        private static IEnumerable<TestResultDTO> ToTestResultDTOCollection(this IList<TestResult> collectionTestResult)
-        {
-            foreach (var testResult in collectionTestResult)
-            {
-                yield return testResult.ToTestResultDto();
-            }
-        }
         #endregion
 
     }

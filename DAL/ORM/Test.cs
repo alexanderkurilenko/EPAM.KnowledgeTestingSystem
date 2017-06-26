@@ -8,27 +8,17 @@ namespace DAL.ORM
 {
     public class Test
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Creator { get; set; }
+        public int Time { get; set; }
+        public int MinProcentToPassTest { get; set; }
+
+        public virtual ICollection<Question> Questions { get; set; }
         public Test()
         {
             Questions = new List<Question>();
-            Answers = new List<Answer>();
         }
-        public virtual int Id { get; set; }
-
-        public virtual string Name { get; set; }
-
-        public virtual int  Time { get; set; }
-        public virtual string Description { get; set; }
-        public virtual int GoodAnswers { get; set; }
-
-        public virtual int BadAnswers { get; set; }
-        public virtual bool IsValid { get; set; }
-        public virtual string Creator { get; set; }
-        public virtual IList<Answer> Answers { get; set; }
-        public virtual IList<Question> Questions { get; set; }
-
-        public int? TestResultId { get; set; }
-        public virtual TestResult TestResult { get; set; }
-
     }
 }

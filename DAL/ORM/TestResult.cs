@@ -10,11 +10,16 @@ namespace DAL.ORM
 {
     public class TestResult
     {
-        public virtual int Id { get; set; }
-        public virtual string Name { get; set; }
-        public virtual DateTime DateComplete { get; set; }
-        public virtual int GoodAnswers { get; set; }
-        public virtual int BadAnswers { get; set; }
-        public virtual User User { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int CorrectAnswerCount { get; set; }
+        public bool IsPassed { get; set; }
+        public double PassingProcent { get; set; }
+        public TimeSpan PassingTime { get; set; }
+
+        public int UserId { get; set; }
+        public int TestId { get; set; }
+        public User User { get; set; }
+        public Test Test { get; set; }
     }
 }

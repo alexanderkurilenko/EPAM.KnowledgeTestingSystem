@@ -1,6 +1,8 @@
-﻿using BLL.DTO;
+﻿
+using BLL.Entities;
 using BLL.Mapper;
 using DAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Helpers;
@@ -9,65 +11,57 @@ namespace BLL.Services.Implementation
 {
     public class UserService:IUserService
     {
-        private IUnitOfWork _uow;
+        private readonly IUnitOfWork uow;
 
         public UserService(IUnitOfWork uow)
         {
-            _uow = uow;
+            this.uow = uow;
         }
 
-        public UserDTO GetUser(int id)
+        public UserEntity GetUserEntity(int id)
         {
-            var user = _uow.Users.Get(id);
-            if (ReferenceEquals(user, null))
-                return null;
-            return user.ToUserDto();
+            if (id < 0)
+                throw new ArgumentOutOfRangeException();
+            return uow.Users.Get(id).ToBll();
         }
 
-        public UserDTO GetUserByEmail(string email)
+
+        public void DeleteUser(UserEntity user)
         {
-            var user = _uow.Users.GetByEmail(email);
-            if (ReferenceEquals(user, null))
-                return null;
-            return user.ToUserDto();
+            if (user == null)
+                throw new ArgumentNullException();
+            uow.Users.Delete(user.Id);
+            uow.Save();
+        }
+        public IEnumerable<UserEntity> GetAllUserEntities()
+        {
+            return uow.Users.GetAll().Select(user => user.ToBll());
+        }
+        public void CreateUser(UserEntity user)
+        {
+            uow.Users.Create(user.ToDal());
+            uow.Save();
         }
 
-        public IEnumerable<UserDTO> GetAllUsers()
+        public UserEntity GetUserByLogin(string login)
         {
-            return _uow.Users.GetAll().Select(user => user.ToUserDto());
-
+            return uow.Users.GetByLogin(login).ToBll();
         }
 
-        public void CreateUser(UserDTO user)
+        public UserEntity GetUserByEmail(string email)
         {
-            _uow.Users.Create(user.ToUserEntity());
-            _uow.Save();
+            return uow.Users.GetByEmail(email).ToBll();
         }
 
-        public void DeleteUser(UserDTO user)
+        public void UpdateUser(UserEntity user)
         {
-            _uow.Users.Delete(user.ToUserEntity());
-            _uow.Save();
-
-        }
-
-        public void UpdateUser(UserDTO user)
-        {
-            _uow.Users.Update(user.ToUserEntity());
-            var entityUser = _uow.Users.Get(user.Id);
-            if (!ReferenceEquals(user.OldPassword, null) && !ReferenceEquals(user.NewPassword, null)
-                && user.NewPassword == user.ConfirmPassword && Crypto.VerifyHashedPassword(entityUser.Password, user.OldPassword))
-            {
-                user.Password = Crypto.HashPassword(user.NewPassword);
-                _uow.Users.UpdatePassword(user.ToUserEntity());
-            }
-            _uow.Save();
-        }
-
-        public void DeleteUser(int id)
-        {
-            _uow.Users.Delete(id);
-            _uow.Save();
+            var entityUser = uow.Users.Get(user.Id);
+            if (user.Password != null)
+                user.Password = Crypto.Hash(user.Password);
+            else
+                user.Password = entityUser.Password;
+            uow.Users.Update(user.ToDal());
+            uow.Save();
         }
     }
 }

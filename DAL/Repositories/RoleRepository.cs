@@ -6,60 +6,74 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
+using DAL.DTO;
+using DAL.Mapper;
 
 namespace DAL.Repositories
 {
-    public class RoleRepository:IRoleRepository
+    public class RoleRepository : IRoleRepository
     {
-        private DbContext db;
+        private readonly DbContext _context;
 
         public RoleRepository(DbContext context)
         {
-            db = context;
+            _context = context;
         }
 
-        public void Create(Role item)
+        public DalRole GetRoleByName(string id)
         {
-            db.Set<Role>().Add(item);
+            var ormUser = _context.Set<Role>().FirstOrDefault(test => test.Name == id);
+            if (ormUser != null)
+                return ormUser.ToDal();
+            return null;
         }
 
-        public void Delete(Role item)
+        public IEnumerable<DalRole> GetAll()
         {
-            db.Set<Role>().Remove(item);
+            var roles = _context.Set<Role>().ToList();
+            return roles.Select(u => u.ToDal());
+        }
+
+        public DalRole Get(int id)
+        {
+            return _context.Set<Role>().FirstOrDefault(r => r.Id == id).ToDal();
+
+        }
+
+        public void Create(DalRole item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(DalRole item)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(int id)
         {
-            Role Role = db.Set<Role>().Find(id);
-            if (Role != null)
-            {
-                db.Set<Role>().Remove(Role);
-            }
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Role> Find(Func<Role, bool> predicate)
+       
+
+        IEnumerable<DalRole> IRepository<DalRole>.GetAll()
         {
-            return db.Set<Role>().Where(predicate).ToList();
+            throw new NotImplementedException();
         }
 
-        public Role Get(int id)
+
+        public IEnumerable<DalRole> Find(Func<DalRole, bool> predicate)
         {
-            return db.Set<Role>().Find(id);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Role> GetAll()
-        {
-            return db.Set<Role>().ToList();
-        }
 
-        public Role GetRoleByName(string name)
-        {
-            return db.Set<Role>().FirstOrDefault(role => role.Name.ToLower() == name.ToLower());
-        }
+      
 
-        public void Update(Role item)
+        public void Delete(DalRole item)
         {
-            db.Entry(item).State = EntityState.Modified;
+            throw new NotImplementedException();
         }
     }
 }

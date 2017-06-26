@@ -1,4 +1,5 @@
-﻿using BLL.DTO;
+﻿
+using BLL.Entities;
 using BLL.Mapper;
 using DAL.Interfaces;
 using System;
@@ -11,80 +12,57 @@ namespace BLL.Services.Implementation
 {
     public class TestService:ITestService
     {
-        private readonly IUnitOfWork _uow;
+        private readonly IUnitOfWork uow;
 
         public TestService(IUnitOfWork uow)
         {
-            _uow = uow;
-        }
-        public void CreateTest(TestDTO test)
-        {
-            _uow.Test.Create(test.ToTestEntity());
-            _uow.Save();
+            this.uow = uow;
         }
 
-        public void DeleteTest(int id)
+        public TestEntity GetTestById(int id)
         {
-            _uow.Test.Delete(id);
-            _uow.Save();
+            if (id < 0)
+                throw new ArgumentOutOfRangeException();
+            return uow.Test.Get(id).ToBll();
         }
 
-        public void DeleteTest(TestDTO test)
+        public IEnumerable<TestEntity> GetAllTestEntities()
         {
-            _uow.Test.Delete(test.ToTestEntity());
-            _uow.Save();
+            return uow.Test.GetAll().Select(t => t.ToBll());
         }
 
-        public IEnumerable<TestDTO> GetAllTests()
+        public void CreateTest(TestEntity test)
         {
-            return _uow.Test.GetAll().Select(test => test.ToTestDto());
+            if (test == null)
+                throw new ArgumentNullException();
+            uow.Test.Create(test.ToDal());
+            uow.Save();
         }
 
-        public TestDTO GetTest(int id)
+        public void DeleteTest(TestEntity test)
         {
-            var test = _uow.Test.Get(id);
-            if (ReferenceEquals(test, null))
+            if (test == null)
+                throw new ArgumentNullException();
+            uow.Test.Delete(test.Id);
+            uow.Save();
+        }
+
+        public void UpdateTest(TestEntity test)
+        {
+            if (test == null)
+                throw new ArgumentNullException();
+            uow.Test.Update(test.ToDal());
+            uow.Save();
+        }
+
+        public IEnumerable<TestEntity> GetTestByName(string name)
+        {
+            if (name == null)
+                throw new ArgumentNullException();
+            var test = uow.Test.GetTestByName(name);
+            if (test == null)
                 return null;
-            return test.ToTestDto();
-        }
-
-        public void UpdateTest(TestDTO test)
-        {
-            _uow.Test.Update(test.ToTestEntity());
-            _uow.Save();
-        }
-
-        public TestResultDTO CheckAnswers(TestDTO test)
-        {
-            var entityModel = _uow.Test.Get(test.Id).ToTestDto();
-            List<AnswerDTO> lhs = entityModel.Answers.ToList();
-            List<string> rhs = new List<string>();
-            foreach (var answer in test.Answers)
-            {
-                if (!ReferenceEquals(answer.Value, null))
-                    rhs.Add(answer.Value);
-                else
-                {
-                    rhs.Add(String.Empty);
-                }
-            }
-            foreach (var answer in entityModel.Answers)
-            {
-                if (ReferenceEquals(answer.Value, null))
-                    answer.Value = String.Empty;
-            }
-            int goodAnswers = 0;
-            for (int i = 0; i < test.Answers.Count; i++)
-            {
-                if (lhs[i].Value.ToLower() == rhs[i].ToLower())
-                    goodAnswers++;
-            }
-            int badAnswers = test.Answers.Count - goodAnswers;
-            return new TestResultDTO()
-            {
-                GoodAnswers = goodAnswers,
-                BadAnswers = badAnswers
-            };
+            return test.Select(t => t.ToBll());
         }
     }
 }

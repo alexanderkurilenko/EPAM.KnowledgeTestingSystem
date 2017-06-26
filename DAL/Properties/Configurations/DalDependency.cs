@@ -22,7 +22,7 @@ namespace DAL.Configurations
         }
         public override void Load()
         {    
-            Bind<DbContext>().To<EpamKnowledgeSystemDbContext>().InRequestScope().WithConstructorArgument("connectionString", connection);
+            Bind<DbContext>().To<KnowledgeSystemDbContext>().InRequestScope().WithConstructorArgument("connectionString", connection);
             Bind<IUserRepository>().To<UserRepository>();
             Bind<ITestRepository>().To<TestRepository>();
             Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();

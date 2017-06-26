@@ -1,4 +1,5 @@
-﻿using BLL.DTO;
+﻿
+using BLL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,11 @@ namespace BLL.Services
 {
     public interface ITestService
     {
-        TestDTO GetTest(int id);
-
-        IEnumerable<TestDTO> GetAllTests();
-        void CreateTest(TestDTO test);
-        void DeleteTest(TestDTO test);
-        void DeleteTest(int id);
-        void UpdateTest(TestDTO test);
-        TestResultDTO CheckAnswers(TestDTO test);
+        TestEntity GetTestById(int id);
+        IEnumerable<TestEntity> GetAllTestEntities();
+        void CreateTest(TestEntity test);
+        void DeleteTest(TestEntity test);
+        void UpdateTest(TestEntity test);
+        IEnumerable<TestEntity> GetTestByName(string test);
     }
 }

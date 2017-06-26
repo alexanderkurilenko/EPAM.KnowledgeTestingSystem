@@ -1,4 +1,5 @@
-﻿using BLL.DTO;
+﻿
+using BLL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,12 @@ namespace BLL.Services
 {
     public interface IUserService
     {
-        UserDTO GetUser(int id);
-        UserDTO GetUserByEmail(string email);
-
-        IEnumerable<UserDTO> GetAllUsers();
-        void CreateUser(UserDTO user);
-        void DeleteUser(UserDTO user);
-        void DeleteUser(int id);
-        void UpdateUser(UserDTO user);
+        UserEntity GetUserEntity(int id);
+        UserEntity GetUserByLogin(string login);
+        UserEntity GetUserByEmail(string email);
+        IEnumerable<UserEntity> GetAllUserEntities();
+        void CreateUser(UserEntity user);
+        void DeleteUser(UserEntity user);
+        void UpdateUser(UserEntity user);
     }
 }

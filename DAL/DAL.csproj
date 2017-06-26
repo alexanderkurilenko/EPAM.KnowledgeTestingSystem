@@ -73,14 +73,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Migrations\201706202113436_1.cs" />
-    <Compile Include="Migrations\201706202113436_1.Designer.cs">
-      <DependentUpon>201706202113436_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706210207347_5.cs" />
-    <Compile Include="Migrations\201706210207347_5.Designer.cs">
-      <DependentUpon>201706210207347_5.cs</DependentUpon>
+    <Compile Include="DTO\DalAnswer.cs" />
+    <Compile Include="DTO\DalQuestion.cs" />
+    <Compile Include="DTO\DalResult.cs" />
+    <Compile Include="DTO\DalRole.cs" />
+    <Compile Include="DTO\DalTest.cs" />
+    <Compile Include="DTO\DalUser.cs" />
+    <Compile Include="DTO\IEntity.cs" />
+    <Compile Include="Mapper\OrmToDalMappper.cs" />
+    <Compile Include="Migrations\201706261333245_1.cs" />
+    <Compile Include="Migrations\201706261333245_1.Designer.cs">
+      <DependentUpon>201706261333245_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\Configurations\DalDependency.cs" />
@@ -97,7 +100,6 @@
     <Compile Include="ORM\KnowledgeSystemDbContext.cs" />
     <Compile Include="ORM\Question.cs" />
     <Compile Include="ORM\Role.cs" />
-    <Compile Include="ORM\RoleTypes.cs" />
     <Compile Include="ORM\Test.cs" />
     <Compile Include="ORM\TestResult.cs" />
     <Compile Include="ORM\User.cs" />
@@ -115,11 +117,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706202113436_1.resx">
-      <DependentUpon>201706202113436_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706210207347_5.resx">
-      <DependentUpon>201706210207347_5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706261333245_1.resx">
+      <DependentUpon>201706261333245_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

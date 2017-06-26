@@ -1,9 +1,9 @@
-﻿using BLL.DTO;
-using BLL.Services;
+﻿using BLL.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebUI.Infrastructure.Providers;
@@ -11,23 +11,21 @@ using WebUI.ViewModels;
 
 namespace WebUI.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
-        private readonly IUserService _userService;
-        private readonly IRoleService _roleService;
+        private IUserService userService;
 
-        public AccountController(IUserService repository, IRoleService roleService)
+        public AccountController(IUserService service)
         {
-            _userService = repository;
-            _roleService = roleService;
+            userService = service;
         }
+
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-                return Redirect(Url.Action("Information", "Profile"));
+            var type = HttpContext.User.GetType();
+            var iden = HttpContext.User.Identity.GetType();
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -39,11 +37,17 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                CustomMembershipProvider provider = new CustomMembershipProvider(_userService, _roleService);
-                if (provider.ValidateUser(viewModel.Email, viewModel.Password))
+                if (Membership.ValidateUser(viewModel.Login, viewModel.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(viewModel.Email, viewModel.RememberMe);
-                    return Redirect(returnUrl ?? Url.Action("Information", "Profile"));
+                    FormsAuthentication.SetAuthCookie(viewModel.Login, viewModel.RememberMe);
+                    if (Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Test");
+                    }
                 }
                 else
                 {
@@ -64,9 +68,6 @@ namespace WebUI.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            if (User.Identity.IsAuthenticated)
-                return Redirect(Url.Action("Information", "Profile"));
-
             return View();
         }
 
@@ -76,27 +77,32 @@ namespace WebUI.Controllers
         public ActionResult Register(RegisterViewModel viewModel)
         {
 
-            UserDTO anyUser = _userService.GetAllUsers().FirstOrDefault(u => u.Email == viewModel.Email);
-
-            if (!ReferenceEquals(anyUser, null))
-            {
-                ModelState.AddModelError("", "User with this address already registered.");
-                return View(viewModel);
-            }
-
             if (ModelState.IsValid)
             {
-                CustomMembershipProvider provider = new CustomMembershipProvider(_userService, _roleService);
-                bool membershipUserCreated = provider.CreateUser(viewModel.Login, viewModel.Email, viewModel.Password,viewModel.Age);
+                var anyUser = userService.GetAllUserEntities().Any(u => u.Email.Contains(viewModel.Email));
 
-                if (membershipUserCreated == true)
+                if (anyUser)
                 {
-                    FormsAuthentication.SetAuthCookie(viewModel.Email, false);
-                    return RedirectToAction("Home", "Test");
+                    ModelState.AddModelError("", "User with this address already registered.");
+                    return View(viewModel);
                 }
-                else
+
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("", "Error registration.");
+                    CustomMembershipProvider pr = new CustomMembershipProvider();
+                    var membershipUser = pr.CreateUser(viewModel.Login,
+                        Crypto.HashPassword(viewModel.Password), viewModel.Email, viewModel.Name);
+
+
+                    if (membershipUser != null)
+                    {
+                        FormsAuthentication.SetAuthCookie(viewModel.Login, false);
+                        return RedirectToAction("Index", "Test");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Error registration.");
+                    }
                 }
             }
             return View(viewModel);

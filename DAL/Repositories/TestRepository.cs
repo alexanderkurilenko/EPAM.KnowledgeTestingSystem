@@ -6,64 +6,96 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.ORM;
 using System.Data.Entity;
+using DAL.DTO;
+using DAL.Mapper;
 
 namespace DAL.Repositories
 {
     public class TestRepository : ITestRepository
     {
-        private DbContext db;
+        private readonly DbContext _context;
 
         public TestRepository(DbContext context)
         {
-            db = context;
+            _context = context;
         }
 
-        public void Create(Test item)
+
+        protected void Dispose(bool flag)
         {
-            db.Set<Test>().Add(item);
+
         }
 
-        public void Delete(Test item)
+
+        public void Dispose()
         {
-            db.Set<Test>().Remove(item);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        public DalTest Get(int id)
+        {
+            var ormtest = _context.Set<Test>().FirstOrDefault(test => test.Id == id);
+            if (ormtest != null)
+                return ormtest.ToDal();
+            return null;
+        }
+
+        public void Create(DalTest item)
+        {
+            var test = item.ToEntity();
+            _context.Set<Test>().Add(test);
+        }
+
+        public void Update(DalTest item)
+        {
+
+            var entity = item.ToEntity();
+            _context.Set<Test>().Attach(entity);
+            foreach (var question in entity.Questions)
+            {
+                _context.Set<Question>().Attach(question);
+                _context.Entry(question).State = EntityState.Modified;
+                foreach (var answer in question.Answers)
+                {
+                    _context.Set<Answer>().Attach(answer);
+                    _context.Entry(answer).State = EntityState.Modified;
+                }
+            }
+
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
 
         public void Delete(int id)
         {
-            Test test = db.Set<Test>().Find(id);
-            if (test != null)
-            {
-                db.Set<Test>().Remove(test);
-            }
+            var item = _context.Set<Test>().Single(test => id == test.Id);
+            _context.Set<Test>().Remove(item);
         }
 
-        public IEnumerable<Test> Find(Func<Test, bool> predicate)
+        public IEnumerable<DalTest> GetAll()
         {
-            return db.Set<Test>().Where(predicate).ToList();
+
+            return _context.Set<Test>().
+                ToList().
+                Select(t => t.ToDal());
         }
 
-        public Test Get(int id)
+        public IEnumerable<DalTest> GetTestByName(string name)
         {
-            return db.Set<Test>().Find(id);
+            return _context.Set<Test>().ToList().
+                FindAll(test => test.Name == name).
+                Select(t => t.ToDal());
         }
 
-        public IEnumerable<Test> GetAll()
+        public IEnumerable<DalTest> Find(Func<DalTest, bool> predicate)
         {
-            return db.Set<Test>().ToList();
+            throw new NotImplementedException();
         }
 
-        public void Update(Test test)
+        public void Delete(DalTest item)
         {
-            var entity = db.Set<Test>().Find(test.Id);
-            entity.Name = test.Name;
-            entity.Questions = test.Questions;
-            entity.Answers = test.Answers;
-            entity.GoodAnswers = test.GoodAnswers;
-            entity.BadAnswers = test.BadAnswers;
-            entity.Time = test.Time;
-            entity.TestResultId = test.TestResultId;
-            entity.IsValid = test.IsValid;
-           db.Entry(entity).State = EntityState.Modified;
+            throw new NotImplementedException();
         }
     }
 }
