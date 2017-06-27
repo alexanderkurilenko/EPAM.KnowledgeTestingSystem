@@ -1,0 +1,60 @@
+﻿@model WebUI.ViewModels.TestViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container ">
+    <div class="row">
+        @using (Html.BeginForm())
+        {
+            <div class="col-sm-8">
+                @for (int j = 0; j < Model.Questions.Count; j++)
+                {
+                    @Html.HiddenFor(m => m.Questions[j].Id)
+
+                    <h4 class="text-info">@Html.DisplayFor(m => m.Questions[j].Text)</h4>
+                    foreach (var answer in Model.Questions[j].Answers)
+                    {
+                        <div>
+                            @Html.RadioButtonFor(m => m.Questions[j].SelectedAnswer, answer.Id, new { id = answer.Id })
+                            @Html.HiddenFor(m => m.Questions[j].Answers[j].Id)
+                            @Html.DisplayFor(m => answer.Text)
+                        </div>
+                    }
+                    @Html.ValidationMessageFor(m => m.Questions[j].SelectedAnswer)
+                }
+                <button type="submit" class="btn btn-primary btn-sm" id="finish">Finish</button>
+            </div>
+
+            <div class="col-sm-4 text-center">
+                <h3 class="text-info">Time left until completion of the test:</h3>
+                <p class="text-center">
+                    <h3 class="text-danger" id="countdown"></h3>
+                </p>
+                @Html.HiddenFor(model => model.StartTime)
+                <input hidden="hidden" name="Id" form="finishForm" value="@Model.Id">
+                <input hidden="hidden" name="Time" form="finishForm" value="@Model.Time">
+                <input hidden="hidden" name="StartPassingTest" form="finishForm" value="@Model.StartTime">
+                <input hidden="hidden" name="passingTime" form="finishForm" id="passingTime">
+                <div hidden="hidden" id="time">@Model.Time</div>
+                <p>
+                    When you answer all the questions and want to end the test, click on the button "Finish". Good luck!
+                </p>
+            </div>
+
+
+        }
+
+    </div>
+
+
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/scripts/jquery-1.10.2.min.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/scripts/customScript.js")
+}

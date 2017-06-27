@@ -35,16 +35,13 @@
 
 
         @RenderBody()
-
-
-
     </div>
     <hr />
     <footer>
         <p>&copy; @DateTime.Now.Year – Created by Kurilenko</p>
     </footer>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/jquery-3.1.1.js")
+    @Scripts.Render("~/Scripts/bootstrap.js")
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
 
     @RenderSection("scripts", required: false)

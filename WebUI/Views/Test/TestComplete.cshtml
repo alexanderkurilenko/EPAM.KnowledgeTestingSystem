@@ -1,0 +1,36 @@
+﻿@model  WebUI.ViewModels.ResultViewModel
+@{
+    ViewBag.Title = "Test Completed";
+}
+<div class="container">
+    <div class="col col-md-12">
+        <div class="row">
+            <h1 class="text-center">Result:</h1>
+            @Html.DisplayNameFor(m => m.PassingProcent)
+            <span class="pull-right strong">@Model.PassingProcent</span>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar"
+                     aria-valuenow=@Model.PassingProcent aria-valuemin="0"
+                     aria-valuemax="100"
+                     style="width:@Math.Round(Model.PassingProcent)%;">@Model.PassingProcent%</div>
+                </div>
+                Correct Answer <span>@Model.CorrectAnswerCount</span> / <span>@Model.CountOfQuestion</span>
+                <span class="pull-right strong">@Model.CorrectAnswerCount</span>
+                <br>
+                Is test passed?
+                @if (Model.IsPassed)
+                {
+                    <span class="text-success pull-right strong">Test pass</span>
+                }
+                else
+                {
+                    <span class="text-danger pull-right strong">Test doesn't pass</span>
+                }
+                <br>
+                Elapsed time: <span class="pull-right strong">@Model.PassingTime</span>
+            </div>
+        </div>
+    </div>
+    @section scripts{
+        @Scripts.Render("~/scripts/customScript.js")
+    }

@@ -41,13 +41,11 @@ namespace DAL.Mapper
                 Description = test.Description,
                 Name = test.Name,
                 MinProcentToPassTest = test.MinProcentToPassTest,
-                Time = test.Time
+                Time = test.Time,
+                Questions=test.Questions?.Select(q=>q.ToEntity()).ToList()
 
             };
-            foreach (var t in test.Questions)
-            {
-                testEntity.Questions.Add(t.ToEntity());
-            }
+           
             return testEntity;
         }
         #endregion

@@ -1,0 +1,54 @@
+﻿@model WebUI.ViewModels.ResultViewModel
+<div class="container">
+    <br>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorrectAnswerCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PassingTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PassingProcent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPassed)
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CorrectAnswerCount) / @Html.DisplayFor(model => model.CountOfQuestion)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PassingTime)
+            </td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                         aria-valuenow=@Model.PassingProcent aria-valuemin="0"
+                         aria-valuemax="100"
+                         style="width:@Model.PassingProcent%;">@Model.PassingProcent%</div>
+                    </div>
+                </td>
+                @if (Model.IsPassed)
+                {
+                    <td class="success">
+                        <label>Pass</label>
+                    </td>
+                }
+                else
+                {
+                    <td class="danger">
+                        <label>Don't pass</label>
+                    </td>
+                }
+            </tr>
+        </table>
+    </div>

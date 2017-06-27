@@ -82,7 +82,10 @@ namespace DAL.Repositories
 
         public DalUser Get(int id)
         {
-            throw new NotImplementedException();
+            var ormUser = _context.Set<User>().FirstOrDefault(test => test.Id == id);
+            if (ormUser != null)
+                return ormUser.ToDal();
+            return null;
         }
 
         public IEnumerable<DalUser> Find(Func<DalUser, bool> predicate)

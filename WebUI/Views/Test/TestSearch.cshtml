@@ -1,0 +1,16 @@
+﻿@model IEnumerable<WebUI.ViewModels.TestViewModel>
+
+<div id="searchresults">
+    <h1>Search result</h1>
+    <br />
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-sm-6 padleft-right">
+            <figcaption>
+
+                <h3>@Html.RouteLink(item.Name, new { controller = "Test", action = "StartTest", id = item.Id })</h3>
+                <p>@Html.DisplayFor(modelItem => item.Description)</p>
+            </figcaption>
+        </div>
+    }
+</div>

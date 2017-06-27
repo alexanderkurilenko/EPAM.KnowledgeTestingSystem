@@ -1,0 +1,35 @@
+﻿@model WebUI.ViewModels.IndexViewModel
+@using WebUI.Infrastructure.Helper
+@{
+    ViewBag.Title = "TEST";
+}
+<div class="container">
+    <div class="row">
+        <div class="header-section text-center">
+            <h2>Tests</h2>
+            <p>You can check your knowledges in diffrent sphere</p>
+            <hr class="bottom-line">
+        </div>
+    </div>
+</div>
+<div class="container" id="results">
+    <div class="row">
+
+        @foreach (var item in Model.Tests)
+        {
+
+            <div class="col-md-4 col-sm-6 padleft-right">
+                <figcaption>
+
+                    <h3>@Html.RouteLink(item.Name, new { controller = "Test", action = "StartTest",id=item.Id })</h3>
+                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                </figcaption>
+            </div>
+        }
+
+    </div>
+    <br>
+    <div class="btn-group">
+        @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+    </div>
+</div>

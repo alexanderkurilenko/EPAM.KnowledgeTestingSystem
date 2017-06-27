@@ -41,12 +41,11 @@ namespace BLL.Mapper
                 Description = test.Description,
                 Name = test.Name,
                 MinProcentToPassTest = test.MinProcentToPassTest,
-                Time = test.Time
+                Time = test.Time,
+                Questions=test.Questions?.Select(q=>q.ToDal()).ToList()
+
             };
-            foreach (var q in test.Questions)
-            {
-                dalTest.Questions.Add(q.ToDal());
-            }
+           
             return dalTest;
         }
 

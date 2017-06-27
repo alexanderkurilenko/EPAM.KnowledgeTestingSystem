@@ -1,0 +1,93 @@
+﻿@model WebUI.ViewModels.CreateTestViewModel
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Create test</div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h4>Create Test</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MinProcentToPassTest, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MinProcentToPassTest, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MinProcentToPassTest, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br>
+                <div id="question-template" class="panel panel-success">
+                    <div class="panel-heading">
+                        <span>Question 1</span>
+                    </div>
+                    <div class="panel-body question-body">
+                        <div class="form-group center-form-group">
+                            <input type="text" class="form-control pull-left" placeholder="Question 1" name="question1">
+                        </div>
+                        <div id="answer-template" class="form-group center-form-group">
+                            <label class="pull-left">Answer</label>
+                            <input type="checkbox" class="pull-right" name=".Answers[]" value="true"><span class="pull-right">Mark as correct</span><br>
+                            <input type="hidden" value="false" name=".Answers[]" />
+                            <textarea class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="center">
+                            <button class="btn btn-info create-answer">Create another answer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="center">
+                    <input id="create-test" type="submit" class="btn btn-success" value="Create test">
+                    <button id="create-question" class="btn btn-info">Create another question</button>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-3.1.1.min.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/customScript.js")
+}

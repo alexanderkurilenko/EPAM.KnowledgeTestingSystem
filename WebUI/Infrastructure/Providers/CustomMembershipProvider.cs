@@ -28,7 +28,7 @@ namespace WebUI.Infrastructure.Providers
             {
                 Email = email,
                 Login = login,
-                RoleId = RoleService.GetRoleByName("User").Id,
+                RoleId = RoleService.GetRoleByName("Admin").Id,
                 Name = name,
                 Password = password
             };
