@@ -1,0 +1,25 @@
+﻿@model WebUI.ViewModels.ExtendedResultViewModel
+<br>
+<div class="test-example panel panel-default">
+    <div class="panel-heading">Extended statistic</div>
+    <div class="panel-body table-responsive">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AverageProcent) %
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AverageTime)
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.AverageProcent) %
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.AverageTime)
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

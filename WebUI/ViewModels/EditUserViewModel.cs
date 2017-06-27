@@ -8,6 +8,7 @@ namespace WebUI.ViewModels
 {
     public class EditUserViewModel
     {
+      
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 

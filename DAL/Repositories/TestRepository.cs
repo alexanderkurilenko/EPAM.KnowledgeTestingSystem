@@ -52,17 +52,22 @@ namespace DAL.Repositories
 
             var entity = item.ToEntity();
             _context.Set<Test>().Attach(entity);
-            foreach (var question in entity.Questions)
+            if (entity.Questions != null)
             {
-                _context.Set<Question>().Attach(question);
-                _context.Entry(question).State = EntityState.Modified;
-                foreach (var answer in question.Answers)
+                foreach (var question in entity.Questions)
                 {
-                    _context.Set<Answer>().Attach(answer);
-                    _context.Entry(answer).State = EntityState.Modified;
+                    if (question != null)
+                    {
+                        _context.Set<Question>().Attach(question);
+                        _context.Entry(question).State = EntityState.Modified;
+                        foreach (var answer in question.Answers)
+                        {
+                            _context.Set<Answer>().Attach(answer);
+                            _context.Entry(answer).State = EntityState.Modified;
+                        }
+                    }
                 }
             }
-
             _context.Entry(entity).State = EntityState.Modified;
         }
 

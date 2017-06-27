@@ -8,11 +8,15 @@
         @using (Html.BeginForm())
         {
             <div class="col-sm-8">
+
                 @for (int j = 0; j < Model.Questions.Count; j++)
                 {
                     @Html.HiddenFor(m => m.Questions[j].Id)
 
                     <h4 class="text-info">@Html.DisplayFor(m => m.Questions[j].Text)</h4>
+
+
+
                     foreach (var answer in Model.Questions[j].Answers)
                     {
                         <div>

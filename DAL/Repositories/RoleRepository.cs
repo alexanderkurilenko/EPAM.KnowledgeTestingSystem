@@ -55,23 +55,13 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-       
-
-        IEnumerable<DalRole> IRepository<DalRole>.GetAll()
+      
+        public void Delete(DalRole item)
         {
             throw new NotImplementedException();
         }
-
 
         public IEnumerable<DalRole> Find(Func<DalRole, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-
-      
-
-        public void Delete(DalRole item)
         {
             throw new NotImplementedException();
         }

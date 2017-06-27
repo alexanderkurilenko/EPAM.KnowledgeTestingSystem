@@ -19,7 +19,8 @@ namespace WebUI.Infrastructure.Mapper
                 Creator = test.Creator,
                 Description = test.Description,
                 Name = test.Name,
-                Questions = test.Questions?.Select(q => q.ToBll()).ToList()
+                Questions = test.Questions?.Select(q => q.ToBll()).ToList(),
+                MinProcentToPassTest=test.MinProcentToPassTest
                 
             };
            
@@ -36,6 +37,7 @@ namespace WebUI.Infrastructure.Mapper
                 Description = test.Description,
                 Name = test.Name,
                 Time = test.Time
+                
             };
             testMvc.Questions = new List<QuestionViewModel>();
             foreach (var q in test.Questions)
@@ -55,13 +57,11 @@ namespace WebUI.Infrastructure.Mapper
                 Creator = test.Creator,
                 Description = test.Description,
                 Name = test.Name,
-                Time = test.Time
+                Time = test.Time,
+                Questions=test.Questions?.Select(q=>q.ToBll()).ToList()
 
-            };
-            foreach (var q in test.Questions)
-            {
-                testEntity.Questions.Add(q.ToBll());
-            }
+             };
+           
 
 
             return testEntity;

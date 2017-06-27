@@ -37,6 +37,20 @@ namespace WebUI.Infrastructure.Providers
             return membershipUser;
         }
 
+        public void CreateUser(string login, string password, string email, string name,int role)
+        {
+            var user = new UserEntity
+            {
+                Email = email,
+                Login = login,
+                RoleId = role,
+                Name = name,
+                Password = password
+            };
+            UserService.CreateUser(user);
+            
+        }
+
         public override bool ValidateUser(string login, string password)
         {
             var user = UserService.GetUserByLogin(login);
