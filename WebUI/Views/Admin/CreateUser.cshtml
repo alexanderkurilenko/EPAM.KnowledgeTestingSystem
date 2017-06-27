@@ -28,11 +28,11 @@
         @foreach (var role in Model.Role)
         {
 
-            <div class="col-md-2">
+            <div class="col-md-offset-2 col-md-10">
                 @Html.DisplayFor(m => role.Name, new { @class = "col-md-2" })
-                @Html.RadioButtonFor(m => m.SelectedRole, role.Id, new { id = role.Id })
                 @Html.ValidationMessageFor(m => role.Name, null, new { @class = "text-danger" })
-            </div>
+                @Html.RadioButtonFor(m => m.SelectedRole, role.Id, new { id = role.Id })
+            </div><br />
 
         }
     </div>

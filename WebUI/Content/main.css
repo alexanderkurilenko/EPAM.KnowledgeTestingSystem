@@ -1,0 +1,64 @@
+﻿body {
+    color: black!important;
+    background-color: lightyellow;
+}
+
+body > .navbar {
+    background-color: lightgreen;
+    border-bottom: 1px solid blue;
+}
+
+p, span, a, li, strong, div, button, a.btn {
+    color: black!important;
+}
+
+.navbar-brand {
+    font-weight: 900;
+    border-right: 1px solid blue;
+}
+
+footer p {
+    padding-top: 10px;
+    text-align: center;
+    border-top:1px solid blue;
+}
+
+button, input {
+    border: 1px solid blue!important;
+    border-radius: 10px!important;
+}
+
+input[type="text"], input[type="password"] {
+    width: 200px;
+}
+
+ul > li {
+    padding: 0 10px!important;
+}
+
+ul.nav.navbar-nav > li {
+    border-left: 1px solid blue;
+}
+
+div.test-item {
+    border-right: 1px solid blue;
+}
+
+div.test-item:nth-child(1) {
+    border-left: 1px solid blue;
+}
+
+.pagination-lol {
+    margin: 20px;
+    text-align: center!important;
+    width: 100%!important;
+}
+
+tr, td, th {
+    border-bottom: 1px solid blue!important;
+    border-top: 1px solid blue!important;
+}
+
+div.container.body-content {
+    margin-top: 50px;
+}

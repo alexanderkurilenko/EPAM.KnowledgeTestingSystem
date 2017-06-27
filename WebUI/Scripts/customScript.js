@@ -118,7 +118,7 @@ var textTime;
 
 function startTime(time) {
     if (time === 0)
-        document.forms["finishForm"].submit();
+        $('#finish').trigger('click');
     else {
         var s = checkTime(time % 60);
         var m = Math.floor(time / 60);

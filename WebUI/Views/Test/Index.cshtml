@@ -8,7 +8,7 @@
         <div class="header-section text-center">
             <h2>Tests</h2>
             <p>You can check your knowledges in diffrent sphere</p>
-            <hr class="bottom-line">
+     
         </div>
     </div>
 </div>
@@ -18,7 +18,7 @@
         @foreach (var item in Model.Tests)
         {
 
-            <div class="col-md-4 col-sm-6 padleft-right">
+            <div class="col-md-4 col-sm-6 padleft-right test-item">
                 <figcaption>
 
                     <h3>@Html.RouteLink(item.Name, new { controller = "Test", action = "StartTest",id=item.Id })</h3>
@@ -29,7 +29,7 @@
 
     </div>
     <br>
-    <div class="btn-group">
-        @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+    <div class="btn-group pagination-lol">
+        <p>@Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))</p>
     </div>
 </div>

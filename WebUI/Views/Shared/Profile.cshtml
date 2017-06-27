@@ -1,18 +1,9 @@
 ﻿@model WebUI.ViewModels.ProfileViewModel
-<br><br>
 <div class="container">
-    <div class="row">
-        <div class="row">
-            <div class="col-xs-10 col-md-6 col-md-push-2">
-                <h1>Name:@Html.DisplayFor(m => m.Name)</h1>
-                <h3>Login:@Html.DisplayFor(m => m.Login)</h3>
-                <h6>Email: @Html.DisplayFor(m => m.Email)</h6>
-                <h6>Role: @Html.DisplayFor(m => m.Role)</h6>
+            <div class="">
+                <h3 style="text-align: left!important">Login: @Html.DisplayFor(m => m.Login)</h3>
             </div>
-        </div>
-    </div>
 </div>
-<br><br>
 
 <div class="test-example panel panel-default">
     <div class="panel-heading">Statistic</div>
@@ -55,7 +46,7 @@
                     <td>
                         |
                         @Html.ActionLink("Details", "Statistic", "Profile",
-                        new { id = item.Id }, new { @class = "btn btn-primary" })
+                        new { id = item.Id }, new { @class = "btn btn-warning" })
                     </td>
                 </tr>
             }
