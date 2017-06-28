@@ -76,6 +76,7 @@ namespace BLL.Services.Implementation
         #region Private Method
         private double CalculatePassingProcent(double correctCount, double countOfQuestion)
         {
+            
             return ((double)correctCount / (double)countOfQuestion) * 100;
         }
 
@@ -83,7 +84,7 @@ namespace BLL.Services.Implementation
         {
             int correctCount = CountOfCorrectAnswer(test);
             int countOfQuestion = test.Questions.Count;
-            if (test.MinProcentToPassTest >= CalculatePassingProcent(correctCount, countOfQuestion))
+            if (test.MinProcentToPassTest.CompareTo((int)CalculatePassingProcent(correctCount, countOfQuestion))<0)
                 return false;
             else
                 return true;

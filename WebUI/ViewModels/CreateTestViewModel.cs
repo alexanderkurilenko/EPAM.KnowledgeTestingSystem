@@ -27,7 +27,7 @@ namespace WebUI.ViewModels
 
         [Display(Name = "Minimal procent to pass test")]
         [Required(ErrorMessage = "The field can not be empty!")]
-        [Range(1, 60)]
+        [Range(1, 100)]
         public int MinProcentToPassTest { get; set; }
 
         public List<QuestionViewModel> Questions { get; set; }

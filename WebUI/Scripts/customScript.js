@@ -54,10 +54,11 @@ function refreshQuestionTitles() {
 function saveTest() {
     $('#loadingmessage').show();
 
-    var test = { 'Name': '', 'Description': '', 'Time': 0, "Questions": [] };
+    var test = { 'Name': '', 'Description': '', 'Time': 0, "Questions": [], 'MinProcentToPassTest': 0 };
     test.Name = $("input[name='Name']").val();
     test.Description = $("input[name='Description']").val();
     test.Time = +$("input[name='Time']").val();
+    test.MinProcentToPassTest = +$("input[name='MinProcentToPassTest']").val();
 
 
     var currentQuestion = $("#question-template");

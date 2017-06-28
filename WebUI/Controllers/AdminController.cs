@@ -72,14 +72,9 @@ namespace WebUI.Controllers
         [HttpPost]
         public ActionResult EditUser(EditUserViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = model.ToBll();
-                _userService.UpdateUser(model.ToBll());
-                return RedirectToAction("Index");
-            }
-
-            return View(model);
+            var user = model.ToBll();
+            _userService.UpdateUser(model.ToBll());
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

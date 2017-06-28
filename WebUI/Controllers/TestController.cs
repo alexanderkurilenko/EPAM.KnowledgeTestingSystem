@@ -122,7 +122,7 @@ namespace WebUI.Controllers
             {
                 return Json(new { message = "Test successfully created" }, JsonRequestBehavior.AllowGet);
             }
-            return View();
+            return View();           
         }
 
         [Authorize(Roles = "Admin")]
