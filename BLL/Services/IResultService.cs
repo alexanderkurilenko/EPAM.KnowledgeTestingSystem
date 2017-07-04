@@ -13,6 +13,5 @@ namespace BLL.Services
         ResultEntity CheckTest(TestEntity test);
         TimeSpan FindAverageTime(IEnumerable<ResultEntity> results);
         double FindAverageProcent(IEnumerable<ResultEntity> results);
-
     }
 }

@@ -15,7 +15,7 @@ namespace DAL.ORM
             Database.SetInitializer(new DbContextInitializer());
         }
 
-        public KnowledgeSystemDbContext() { }
+        public KnowledgeSystemDbContext():base("name = EPAMKTS") { }
 
         public KnowledgeSystemDbContext(string connectionString) : base(connectionString)
         {

@@ -18,9 +18,9 @@ namespace DAL.Repositories
     {
         private readonly DbContext _context;
 
-        public UserRepository(DbContext uow)
+        public UserRepository(DbContext context)
         {
-            _context = uow;
+            _context = context;
         }
 
 

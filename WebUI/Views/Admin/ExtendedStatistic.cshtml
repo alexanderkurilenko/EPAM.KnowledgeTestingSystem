@@ -3,7 +3,7 @@
 <div class="test-example panel panel-default">
     <div class="panel-heading">Extended statistic</div>
     <div class="panel-body table-responsive">
-        <table class="table">
+        <table class="table" id="stat">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.AverageProcent) %
@@ -13,13 +13,20 @@
                 </th>
             </tr>
             <tr>
-                <td>
+                <td id="avproc">
                     @Html.DisplayFor(model => model.AverageProcent) %
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => modelItem.AverageTime)
+                <td id="avtime">
+                    @Html.DisplayFor(modelItem => modelItem.AverageTime.Seconds)
                 </td>
             </tr>
         </table>
     </div>
 </div>
+<div id="donut-chart">
+</div>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
+@Scripts.Render("~/Scripts/Chart.js")

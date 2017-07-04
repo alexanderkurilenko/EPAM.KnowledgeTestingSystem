@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     $(document).on('click', '.panel-heading', function () {
         $(this).next(".panel-body").slideToggle("fast");
         return false;

@@ -12,17 +12,19 @@ namespace BLL.Services.Implementation
     public class UserService:IUserService
     {
         private readonly IUnitOfWork uow;
+        private readonly IUserRepository repo;
 
-        public UserService(IUnitOfWork uow)
+        public UserService(IUnitOfWork uow, IUserRepository rep)
         {
             this.uow = uow;
+            this.repo = rep;
         }
 
         public UserEntity GetUserEntity(int id)
         {
             if (id < 0)
                 throw new ArgumentOutOfRangeException();
-            return uow.Users.Get(id).ToBll();
+            return repo.Get(id).ToBll();
         }
 
 
@@ -30,37 +32,37 @@ namespace BLL.Services.Implementation
         {
             if (user == null)
                 throw new ArgumentNullException();
-            uow.Users.Delete(user.Id);
+            repo.Delete(user.Id);
             uow.Save();
         }
         public IEnumerable<UserEntity> GetAllUserEntities()
         {
-            return uow.Users.GetAll().Select(user => user.ToBll());
+            return repo.GetAll().Select(user => user.ToBll());
         }
         public void CreateUser(UserEntity user)
         {
-            uow.Users.Create(user.ToDal());
+            repo.Create(user.ToDal());
             uow.Save();
         }
 
         public UserEntity GetUserByLogin(string login)
         {
-            return uow.Users.GetByLogin(login).ToBll();
+            return repo.GetByLogin(login).ToBll();
         }
 
         public UserEntity GetUserByEmail(string email)
         {
-            return uow.Users.GetByEmail(email).ToBll();
+            return repo.GetByEmail(email).ToBll();
         }
 
         public void UpdateUser(UserEntity user)
         {
-            var entityUser = uow.Users.Get(user.Id);
+            var entityUser = repo.Get(user.Id);
             if (user.Password != null)
                 user.Password = Crypto.Hash(user.Password);
             else
                 user.Password = entityUser.Password;
-            uow.Users.Update(user.ToDal());
+            repo.Update(user.ToDal());
             uow.Save();
         }
     }

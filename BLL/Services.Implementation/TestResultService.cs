@@ -13,33 +13,36 @@ namespace BLL.Services.Implementation
     public class TestResultService:IResultService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IResultRepository repo;
+        private readonly ITestRepository _trepo;
 
-        public TestResultService(IUnitOfWork uow)
+        public TestResultService(IUnitOfWork uow, IResultRepository rep,ITestRepository trep)
         {
             this._uow = uow;
-
+            this.repo = rep;
+            this._trepo = trep;
         }
 
         public void CreateTestResult(ResultEntity test)
         {
-            _uow.Results.Create(test.ToDal());
+            repo.Create(test.ToDal());
             _uow.Save();
         }
 
         public void DeleteTestResult(ResultEntity test)
         {
-            _uow.Results.Delete(test.Id);
+            repo.Delete(test.Id);
             _uow.Save();
         }
 
         public IEnumerable<ResultEntity> GetAllResults()
         {
-            return _uow.Results.GetAll().Select(r => r.ToBll());
+            return repo.GetAll().Select(r => r.ToBll());
         }
 
         public ResultEntity GetResultById(int id)
         {
-            return _uow.Results.Get(id).ToBll();
+            return repo.Get(id).ToBll();
         }
 
         public TimeSpan FindAverageTime(IEnumerable<ResultEntity> results)
@@ -84,7 +87,7 @@ namespace BLL.Services.Implementation
         {
             int correctCount = CountOfCorrectAnswer(test);
             int countOfQuestion = test.Questions.Count;
-            if (test.MinProcentToPassTest.CompareTo((int)CalculatePassingProcent(correctCount, countOfQuestion))<0)
+            if (test.MinProcentToPassTest - CalculatePassingProcent(correctCount, countOfQuestion)>0)
                 return false;
             else
                 return true;
@@ -93,7 +96,7 @@ namespace BLL.Services.Implementation
         private int CountOfCorrectAnswer(TestEntity currentTest)
         {
             int correctAnswer = 0;
-            var questions = _uow.Test.Get(currentTest.Id).Questions.ToList();
+            var questions = _trepo.Get(currentTest.Id).Questions.ToList();
             foreach (var q in questions)
             {
                 foreach (var a in q.Answers)

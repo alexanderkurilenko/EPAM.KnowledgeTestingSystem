@@ -49,7 +49,10 @@ namespace WebUI.Controllers
                 {
                     return HttpNotFound();
                 }
-                test.StartTime = DateTime.Now;
+                if (test.StartTime < DateTime.Now)
+                {
+                    test.StartTime = DateTime.Now;
+                }           
                 return View(test);
             }
             else
@@ -136,6 +139,7 @@ namespace WebUI.Controllers
             }
             return View(test);
         }
+
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {

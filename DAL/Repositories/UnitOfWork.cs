@@ -13,67 +13,16 @@ namespace DAL.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private AnswerRepository answerRepository;
-        private QuestionRepository questionRepository;
-        private TestResultRepository testResultRepository;
-        private RoleRepository roleRepository;
-        private TestRepository testRepository;
-        private UserRepository userRepository;
+        private DbContext db;
 
-        private KnowledgeSystemDbContext db;
-
-        public UnitOfWork(string connection)
+        public UnitOfWork(DbContext context)
         {
-            db = new KnowledgeSystemDbContext(connection);
+            db = context;
             //IKernel ninjectKernel = new StandardKernel(new DalDependency(connection));
             //db = ninjectKernel.Get<KnowledgeSystemDbContext>();
         }
 
    
-       
-
-
-        public IResultRepository Results
-        {
-            get
-            {
-                if (testResultRepository == null)
-                    testResultRepository = new TestResultRepository(db);
-                return testResultRepository;
-            }
-        }
-
-
-        public IRoleRepository Roles
-        {
-            get
-            {
-                if (roleRepository == null)
-                    roleRepository = new RoleRepository(db);
-                return roleRepository;
-            }
-        }
-
-        public ITestRepository Test
-        {
-            get
-            {
-                if (testRepository == null)
-                    testRepository = new TestRepository(db);
-                return testRepository;
-            }
-        }
-
-        public IUserRepository Users
-        {
-            get
-            {
-                if (userRepository == null)
-                    userRepository = new UserRepository(db);
-                return userRepository;
-            }
-        }
-
         private bool disposed = false;
 
         public virtual void Dispose(bool disposing)

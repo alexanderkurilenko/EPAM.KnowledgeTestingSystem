@@ -13,29 +13,31 @@ namespace BLL.Services.Implementation
     public class TestService:ITestService
     {
         private readonly IUnitOfWork uow;
+        private readonly ITestRepository repo;
 
-        public TestService(IUnitOfWork uow)
+        public TestService(IUnitOfWork uow, ITestRepository rep)
         {
             this.uow = uow;
+            this.repo = rep;
         }
 
         public TestEntity GetTestById(int id)
         {
             if (id < 0)
                 throw new ArgumentOutOfRangeException();
-            return uow.Test.Get(id).ToBll();
+            return repo.Get(id).ToBll();
         }
 
         public IEnumerable<TestEntity> GetAllTestEntities()
         {
-            return uow.Test.GetAll().Select(t => t.ToBll());
+            return repo.GetAll().Select(t => t.ToBll());
         }
 
         public void CreateTest(TestEntity test)
         {
             if (test == null)
                 throw new ArgumentNullException();
-            uow.Test.Create(test.ToDal());
+            repo.Create(test.ToDal());
             uow.Save();
         }
 
@@ -43,7 +45,7 @@ namespace BLL.Services.Implementation
         {
             if (test == null)
                 throw new ArgumentNullException();
-            uow.Test.Delete(test.Id);
+            repo.Delete(test.Id);
             uow.Save();
         }
 
@@ -51,7 +53,7 @@ namespace BLL.Services.Implementation
         {
             if (test == null)
                 throw new ArgumentNullException();
-            uow.Test.Update(test.ToDal());
+            repo.Update(test.ToDal());
             uow.Save();
         }
 
@@ -59,7 +61,7 @@ namespace BLL.Services.Implementation
         {
             if (name == null)
                 throw new ArgumentNullException();
-            var test = uow.Test.GetTestByName(name);
+            var test = repo.GetTestByName(name);
             if (test == null)
                 return null;
             return test.Select(t => t.ToBll());

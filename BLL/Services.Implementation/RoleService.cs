@@ -12,19 +12,21 @@ namespace BLL.Services.Implementation
     public class RoleService : IRoleService
     {
         private readonly IUnitOfWork uow;
+        private readonly IRoleRepository repo;
 
-        public RoleService(IUnitOfWork uow)
+        public RoleService(IUnitOfWork uow,IRoleRepository rep)
         {
             this.uow = uow;
+            this.repo = rep;
         }
         public RoleEntity GetRoleEntity(int id)
         {
-            return uow.Roles.Get(id).ToBll();
+            return repo.Get(id).ToBll();
         }
 
         public IEnumerable<RoleEntity> GetAllRoleEntities()
         {
-            return uow.Roles.GetAll().Select(r => r.ToBll());
+            return repo.GetAll().Select(r => r.ToBll());
         }
 
         public void CreateRole(RoleEntity role)
@@ -39,7 +41,7 @@ namespace BLL.Services.Implementation
 
         public RoleEntity GetRoleByName(string id)
         {
-            return uow.Roles.GetRoleByName(id).ToBll();
+            return repo.GetRoleByName(id).ToBll();
         }
     }
 }

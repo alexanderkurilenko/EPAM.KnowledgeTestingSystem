@@ -20,7 +20,9 @@ namespace WebUI.Controllers
         public string Index()
         {
             //service.CreateUser(new BLL.Entities.UserEntity() { Email = "fdlkf@mail.ru", Name = "alex", Login = "lalaa" });
-            return service.GetRoleByName("User").Id.ToString();
+            TimeSpan t = new TimeSpan();
+            DateTime d = new DateTime();
+            return d.ToString();
         }
     }
 }

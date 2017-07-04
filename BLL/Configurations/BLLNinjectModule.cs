@@ -1,6 +1,9 @@
-﻿using DAL.Interfaces;
+﻿using DAL.Configurations;
+using DAL.Interfaces;
 using DAL.Repositories;
+using Ninject;
 using Ninject.Modules;
+using Ninject.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +21,11 @@ namespace BLL.Configurations
         }
         public override void Load()
         {
-            Bind<IUnitOfWork>().To<UnitOfWork>().WithConstructorArgument(connectionString);
+           
+            Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
+           
+            Kernel.Load(new DALNinjectModule());
+
         }
     }
 }

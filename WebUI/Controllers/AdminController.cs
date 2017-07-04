@@ -37,12 +37,24 @@ namespace WebUI.Controllers
             return View("Profile", user);
         }
 
-        public ActionResult UsersDetails()
+        public ActionResult UsersDetails(string searchItem)
         {
             var users = _userService.GetAllUserEntities().Select(t => t.ToMvc());
+            
+            if (!ReferenceEquals(searchItem, null))
+            {
+             users=_userService.GetAllUserEntities().Select(t=>t.ToMvc()).Where(a => a.Name.Contains(searchItem) || a.Email.Contains(searchItem))
+                    .ToList();
+            }
+            
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("SearchUsers",users);
+            }
+
             return View(users);
         }
-
+       
         public ActionResult TestsDetails()
         {
             var tests = _testService.GetAllTestEntities().Select(t => t.ToMvc());

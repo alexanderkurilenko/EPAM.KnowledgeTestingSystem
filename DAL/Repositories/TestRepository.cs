@@ -20,19 +20,6 @@ namespace DAL.Repositories
             _context = context;
         }
 
-
-        protected void Dispose(bool flag)
-        {
-
-        }
-
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         public DalTest Get(int id)
         {
             var ormtest = _context.Set<Test>().FirstOrDefault(test => test.Id == id);

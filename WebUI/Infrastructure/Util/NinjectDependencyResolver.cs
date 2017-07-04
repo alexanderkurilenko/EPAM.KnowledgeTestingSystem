@@ -32,10 +32,10 @@ namespace WebUI.Util
 
         private void AddBindings()
         {
-            kernel.Bind<IUserService>().To<UserService>().InRequestScope();
-            kernel.Bind<IRoleService>().To<RoleService>().InRequestScope();
-            kernel.Bind<ITestService>().To<TestService>().InRequestScope();
-            kernel.Bind<IResultService>().To<TestResultService>().InRequestScope();
+            kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IRoleService>().To<RoleService>();
+            kernel.Bind<ITestService>().To<TestService>();
+            kernel.Bind<IResultService>().To<TestResultService>();
           
         }
     }
